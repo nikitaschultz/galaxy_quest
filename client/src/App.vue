@@ -1,28 +1,36 @@
 <template lang="html">
   <div class="app-container">
     <h1>Galaxy Quest</h1>
-    <div class="game-container">
-      <profile-container v-if="profileView === true" :profiles="profiles" />
-    </div>
+    <profile-container v-if="profileView" :profiles="profiles" />
+      <div class="containers">
+        <gameplay-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" :activeGame="activeGame" v-if="!profileView" />
+        <instruction-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" :activeGame="activeGame" v-if="!profileView" />
+      </div>
   </div>
 </template>
 
 <script>
 import ProfileService from './services/ProfileService.js';
 import ProfileContainer from './components/Profiles/ProfileContainer.vue';
+import GameplayContainer from './components/GameplayScreen/GameplayContainer.vue';
+import InstructionContainer from './components/InstructionScreen/InstructionContainer.vue';
 import { eventBus } from './main.js';
 
 export default {
   name: "app",
   components: {
-    "profile-container": ProfileContainer
+    "profile-container": ProfileContainer,
+    "gameplay-container": GameplayContainer,
+    "instruction-container": InstructionContainer
   },
   data(){
     return {
       createProfileView: false,
       profileView: true,
       profiles: [],
-      activeProfile: null
+      activeProfile: null,
+      activeGame: null,
+      homeScreenView: false
     }
   },
   mounted(){
@@ -31,11 +39,13 @@ export default {
     eventBus.$on('profile-added', (newProfile) => {
       this.profiles.push(newProfile)
       this.profileView = false;
+      this.homeScreenView = true;
     })
 
     eventBus.$on('profile-selected', (selectedProfile) => {
       this.activeProfile = selectedProfile;
       this.profileView = false;
+      this.homeScreenView = true;
     })
   },
   methods: {
@@ -55,10 +65,12 @@ export default {
     align-items: center;
   }
 
-  .game-container {
+  .containers {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
+
+
 
 </style>

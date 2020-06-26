@@ -14,7 +14,7 @@ export default {
   props: ["profile"],
   computed: {
     avatarSRC(){
-      return require("../../assets/" + this.profile.avatar + ".png")
+      return require("@/assets/" + this.profile.avatar + ".png")
     }
   },
   methods: {
