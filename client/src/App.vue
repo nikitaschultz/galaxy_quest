@@ -21,7 +21,8 @@ export default {
     return {
       createProfileView: false,
       profileView: true,
-      profiles: []
+      profiles: [],
+      activeProfile: null
     }
   },
   mounted(){
@@ -29,6 +30,11 @@ export default {
 
     eventBus.$on('profile-added', (newProfile) => {
       this.profiles.push(newProfile)
+      this.profileView = false;
+    })
+
+    eventBus.$on('profile-selected', (selectedProfile) => {
+      this.activeProfile = selectedProfile;
       this.profileView = false;
     })
   },

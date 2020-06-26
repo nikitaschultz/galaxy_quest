@@ -1,9 +1,13 @@
 <template lang="html">
   <div class="profile-container">
     <h2>Who's exploring today?</h2>
-    <profile-grid v-if="createProfileView === false" :profiles="profiles" />
-    <create-profile v-if="createProfileView"/>
-    <button v-if="createProfileView === false" v-on:click="toggleCreateView" type="button" name="button">Add a new explorer</button>
+    <div v-if="createProfileView === false">
+      <profile-grid  :profiles="profiles" />
+      <button v-if="createProfileView === false" v-on:click="toggleCreateView" type="button" name="button">Add a new explorer</button>
+    </div>
+    <div  v-if="createProfileView">
+      <create-profile />
+    </div>
   </div>
 </template>
 
@@ -27,6 +31,10 @@ export default {
   mounted(){
     eventBus.$on('profile-added', (profile) => {
       this.createProfileView = false;
+    })
+
+    eventBus.$on('toggleCreateView', () => {
+      this.createProfileView = !this.createProfileView
     })
   },
   methods: {

@@ -12,7 +12,7 @@
     </form>
     <div class="horizontal-flex">
       <button v-on:click="handleCreateProfile" name="create-profile">Start Exploring</button>
-      <button name="back-button">Back</button>
+      <button v-on:click="handleBackButton" name="back-button">Back</button>
     </div>
   </div>
 </template>
@@ -69,6 +69,9 @@ export default {
 
       ProfileService.postProfile(profile)
       .then(res => eventBus.$emit('profile-added', profile))
+    },
+    handleBackButton(){
+      eventBus.$emit('toggleCreateView')
     }
   }
 }
