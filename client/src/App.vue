@@ -3,8 +3,8 @@
     <h1>Galaxy Quest</h1>
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
-        <gameplay-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" :planets="planets" v-if="!profileView" />
-        <instruction-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" v-if="!profileView" />
+        <gameplay-container :homeScreenViewGame="homeScreenViewGame" :activeProfile="activeProfile" :planets="planets" v-if="!profileView" />
+        <instruction-container :homeScreenViewInstructions="homeScreenViewInstructions" :activeProfile="activeProfile" v-if="!profileView" />
       </div>
   </div>
 </template>
@@ -30,7 +30,8 @@ export default {
       profileView: true,
       profiles: [],
       activeProfile: null,
-      homeScreenView: false,
+      homeScreenViewGame: false,
+      homeScreenViewInstructions: false,
       planets: []
     }
   },
@@ -42,13 +43,19 @@ export default {
       this.profiles.push(newProfile)
       this.activeProfile = newProfile;
       this.profileView = false;
-      this.homeScreenView = true;
+      this.homeScreenViewGame = true;
+      this.homeScreenViewInstructions = true;
     })
 
     eventBus.$on('profile-selected', (selectedProfile) => {
       this.activeProfile = selectedProfile;
       this.profileView = false;
-      this.homeScreenView = true;
+      this.homeScreenViewGame = true;
+      this.homeScreenViewInstructions = true;
+    })
+
+    eventBus.$on('planet-selected', (planet) => {
+      this.homeScreenViewInstructions = false;
     })
   },
   methods: {

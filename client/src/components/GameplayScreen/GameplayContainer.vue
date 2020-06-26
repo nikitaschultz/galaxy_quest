@@ -1,20 +1,28 @@
 <template lang="html">
   <div class="gameplay-container">
-    <home :planets="planets" v-if="homeScreenView" />
+    <home :planets="planets" v-if="homeScreenViewGame" />
   </div>
 </template>
 
 <script>
 import Home from './Home.vue';
+import { eventBus } from '../../main.js';
 
 export default {
   name: "gameplay-container",
-  props: ["planets", "homeScreenView"],
+  props: ["planets", "homeScreenViewGame"],
   components: {
     "home": Home
   },
   data(){
-    selectedPlanet: null
+    return {
+      selectedPlanet: null
+    }
+  },
+  mounted(){
+    eventBus.$on('planet-selected', (planet) => {
+      this.selectedPlanet = planet;
+    })
   }
 }
 </script>
