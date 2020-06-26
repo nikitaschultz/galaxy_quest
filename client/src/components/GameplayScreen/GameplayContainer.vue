@@ -1,11 +1,21 @@
 <template lang="html">
   <div class="gameplay-container">
-
+    <home :planets="planets" v-if="homeScreenView" />
   </div>
 </template>
 
 <script>
+import Home from './Home.vue';
+
 export default {
+  name: "gameplay-container",
+  props: ["planets", "homeScreenView"],
+  components: {
+    "home": Home
+  },
+  data(){
+    selectedPlanet: null
+  }
 }
 </script>
 

@@ -15,3 +15,18 @@ db.profiles.insertMany([
     completedGames: []
   }
 ])
+
+db.planets.insertMany([
+  {
+    name: "numbers",
+    games: []
+  },
+  {
+    name: "geography",
+    games: []
+  },
+  {
+    name: "animals",
+    games: []
+  }
+])

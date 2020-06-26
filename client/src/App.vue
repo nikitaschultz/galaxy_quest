@@ -3,13 +3,14 @@
     <h1>Galaxy Quest</h1>
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
-        <gameplay-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" :activeGame="activeGame" v-if="!profileView" />
-        <instruction-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" :activeGame="activeGame" v-if="!profileView" />
+        <gameplay-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" :planets="planets" v-if="!profileView" />
+        <instruction-container :homeScreenView="homeScreenView" :activeProfile="activeProfile" v-if="!profileView" />
       </div>
   </div>
 </template>
 
 <script>
+import PlanetService from './services/PlanetService.js';
 import ProfileService from './services/ProfileService.js';
 import ProfileContainer from './components/Profiles/ProfileContainer.vue';
 import GameplayContainer from './components/GameplayScreen/GameplayContainer.vue';
@@ -29,15 +30,17 @@ export default {
       profileView: true,
       profiles: [],
       activeProfile: null,
-      activeGame: null,
-      homeScreenView: false
+      homeScreenView: false,
+      planets: []
     }
   },
   mounted(){
     this.fetchProfiles();
+    this.fetchPlanets();
 
     eventBus.$on('profile-added', (newProfile) => {
       this.profiles.push(newProfile)
+      this.activeProfile = newProfile;
       this.profileView = false;
       this.homeScreenView = true;
     })
@@ -52,6 +55,10 @@ export default {
     fetchProfiles(){
       ProfileService.getProfiles()
       .then(profiles => this.profiles = profiles)
+    },
+    fetchPlanets(){
+      PlanetService.getPlanets()
+      .then(planets => this.planets = planets)
     }
   }
 }
