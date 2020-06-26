@@ -2,7 +2,7 @@
   <div class="app-container">
     <h1>Galaxy Quest</h1>
     <div class="game-container">
-      <profile-container v-if="profileView = true" :profiles="profiles"/>
+      <profile-container v-if="profileView === true" :profiles="profiles" />
     </div>
   </div>
 </template>
@@ -10,6 +10,7 @@
 <script>
 import ProfileService from './services/ProfileService.js';
 import ProfileContainer from './components/Profiles/ProfileContainer.vue';
+import { eventBus } from './main.js';
 
 export default {
   name: "app",
@@ -18,12 +19,18 @@ export default {
   },
   data(){
     return {
+      createProfileView: false,
       profileView: true,
       profiles: []
     }
   },
   mounted(){
     this.fetchProfiles();
+
+    eventBus.$on('profile-added', (newProfile) => {
+      this.profiles.push(newProfile)
+      this.profileView = false;
+    })
   },
   methods: {
     fetchProfiles(){

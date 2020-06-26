@@ -3,13 +3,14 @@
     <h2>Who's exploring today?</h2>
     <profile-grid v-if="createProfileView === false" :profiles="profiles" />
     <create-profile v-if="createProfileView"/>
-    <button type="button" name="button">Add a new explorer</button>
+    <button v-if="createProfileView === false" v-on:click="toggleCreateView" type="button" name="button">Add a new explorer</button>
   </div>
 </template>
 
 <script>
 import ProfileGrid from './ProfileGrid.vue';
 import CreateProfile from './CreateProfile';
+import { eventBus } from '../../main.js';
 
 export default {
   name: "profile-container",
@@ -20,7 +21,17 @@ export default {
   props: ["profiles"],
   data(){
     return {
-      createProfileView: true
+      createProfileView: false
+    }
+  },
+  mounted(){
+    eventBus.$on('profile-added', (profile) => {
+      this.createProfileView = false;
+    })
+  },
+  methods: {
+    toggleCreateView(){
+      this.createProfileView = !this.createProfileView
     }
   }
 }

@@ -4,21 +4,23 @@
     <form class="new-profile">
       <div class="horizontal-flex">
         <label for="name">Name:</label>
-        <input type="text" name="" value="">
+        <input type="text" v-model:value="profileName">
       </div>
       <div class="horizontal-flex">
         <img v-for="avatar in avatars" v-on:click="selectAvatar(avatar.name)" :src="avatar.url" :value="avatar.name" height="100px">
       </div>
     </form>
     <div class="horizontal-flex">
-      <button name="create-profile">Start Exploring</button>
+      <button v-on:click="handleCreateProfile" name="create-profile">Start Exploring</button>
       <button name="back-button">Back</button>
     </div>
   </div>
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService.js';
+import ProfileService from '../../services/ProfileService.js';
+import { eventBus } from '../../main.js';
+
 
 export default {
   name: "create-profile",
@@ -46,7 +48,8 @@ export default {
           url: this.getURL("avatar5")
         }
       ],
-      selectedAvatar: null
+      selectedAvatar: null,
+      profileName: ""
     }
   },
   methods: {
@@ -56,8 +59,16 @@ export default {
     selectAvatar(avatar){
       this.selectedAvatar = avatar
     },
-    createProfile(){
+    handleCreateProfile(){
+      const profile = {
+        name: this.profileName,
+        avatar: this.selectedAvatar,
+        starPoints: 0,
+        completedGames: []
+      }
 
+      ProfileService.postProfile(profile)
+      .then(res => eventBus.$emit('profile-added', profile))
     }
   }
 }
