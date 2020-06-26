@@ -1,19 +1,28 @@
 <template lang="html">
   <div class="profile-container">
     <h2>Who's exploring today?</h2>
-    <profile-grid :profiles="profiles" />
+    <profile-grid v-if="createProfileView === false" :profiles="profiles" />
+    <create-profile v-if="createProfileView"/>
+    <button type="button" name="button">Add a new explorer</button>
   </div>
 </template>
 
 <script>
 import ProfileGrid from './ProfileGrid.vue';
+import CreateProfile from './CreateProfile';
 
 export default {
   name: "profile-container",
   components: {
-    "profile-grid": ProfileGrid
+    "profile-grid": ProfileGrid,
+    "create-profile": CreateProfile
   },
-  props: ["profiles"]
+  props: ["profiles"],
+  data(){
+    return {
+      createProfileView: true
+    }
+  }
 }
 </script>
 
