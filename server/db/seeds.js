@@ -1,7 +1,7 @@
 use galaxy_quest;
 db.dropDatabase();
 
-db.galaxy_quest.insertMany([
+db.profiles.insertMany([
   {
     name: "Sully",
     avatar: "avatar3",
