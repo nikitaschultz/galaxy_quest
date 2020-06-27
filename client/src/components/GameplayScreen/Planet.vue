@@ -1,6 +1,6 @@
 <template lang="html">
-  <div class="">
-    <img :src="planetSRC" :alt="planet.name" width="100px" v-on:click="handleSelectPlanet">
+  <div class="planet">
+    <img :src="planetSRC" :alt="planet.name" width="100px" v-on:click="handleSelectPlanet" :class="planet.name">
   </div>
 </template>
 
@@ -24,4 +24,22 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+  .geography {
+    margin: 10vh 5vw;
+  }
+
+  .animals {
+    margin: 50vh 5vw;
+  }
+
+  .numbers {
+    margin: 30vh 5vw;
+  }
+
+  .planet:hover {
+    filter: drop-shadow(0 0 10px gold);
+  }
+
+
 </style>

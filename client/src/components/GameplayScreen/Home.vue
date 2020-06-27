@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div class="home-gameplay">
     <planet v-for="(planet, index) in planets" :planet="planet" :key="index" />
   </div>
 </template>
@@ -17,4 +17,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+  .home-gameplay {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
 </style>

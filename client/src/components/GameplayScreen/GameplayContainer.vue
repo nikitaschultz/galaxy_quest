@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="gameplay-container">
+    <continent-select />
     <home :planets="planets" v-if="homeScreenViewGame" />
   </div>
 </template>
@@ -7,12 +8,14 @@
 <script>
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
+import ContinentSelect from './Games/ContinentSelect.vue';
 
 export default {
   name: "gameplay-container",
   props: ["planets", "homeScreenViewGame"],
   components: {
-    "home": Home
+    "home": Home,
+    "continent-select": ContinentSelect
   },
   data(){
     return {
@@ -30,7 +33,7 @@ export default {
 <style lang="css" scoped>
 
   .gameplay-container {
-    background-color: radial-gradient(midnightblue, indigo, black, black, black);
+    background-image: radial-gradient(indigo, midnightblue, black, black);
     width: 61vw;
     height: 75vh;
     margin: 0 0.5vw 0 0;

@@ -50,8 +50,8 @@ export default {
     eventBus.$on('profile-selected', (selectedProfile) => {
       this.activeProfile = selectedProfile;
       this.profileView = false;
-      this.homeScreenViewGame = true;
-      this.homeScreenViewInstructions = true;
+      this.homeScreenViewGame = false;
+      this.homeScreenViewInstructions = false;
     })
 
     eventBus.$on('planet-selected', (planet) => {
