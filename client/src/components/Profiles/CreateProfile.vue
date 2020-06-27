@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div class="centered">
     <h2>New Explorer</h2>
     <form class="new-profile">
       <div class="horizontal-flex">
@@ -7,7 +7,7 @@
         <input type="text" v-model:value="profileName">
       </div>
       <div class="horizontal-flex">
-        <img v-for="avatar in avatars" v-on:click="selectAvatar(avatar.name)" :src="avatar.url" :value="avatar.name" height="100px">
+        <img v-for="avatar in avatars" v-on:click="selectAvatar(avatar)" :src="avatar.url" :value="avatar.name" height="100px" v-bind:class="{selected: avatar.selected}">
       </div>
     </form>
     <div class="horizontal-flex">
@@ -29,23 +29,28 @@ export default {
       avatars: [
         {
           name: "avatar1",
-          url: this.getURL("avatar1")
+          url: this.getURL("avatar1"),
+          selected: false
         },
         {
           name: "avatar2",
-          url: this.getURL("avatar2")
+          url: this.getURL("avatar2"),
+          selected: false
         },
         {
           name: "avatar3",
-          url: this.getURL("avatar3")
+          url: this.getURL("avatar3"),
+          selected: false
         },
         {
           name: "avatar4",
-          url: this.getURL("avatar4")
+          url: this.getURL("avatar4"),
+          selected: false
         },
         {
           name: "avatar5",
-          url: this.getURL("avatar5")
+          url: this.getURL("avatar5"),
+          selected: false
         }
       ],
       selectedAvatar: null,
@@ -57,12 +62,14 @@ export default {
       return require("@/assets/" + avatar + ".png")
     },
     selectAvatar(avatar){
-      this.selectedAvatar = avatar
+      if(this.selectedAvatar){this.selectedAvatar.selected = false}
+      this.selectedAvatar = avatar;
+      avatar.selected = !avatar.selected;
     },
     handleCreateProfile(){
       const profile = {
         name: this.profileName,
-        avatar: this.selectedAvatar,
+        avatar: this.selectedAvatar.name,
         starPoints: 0,
         completedGames: []
       }
@@ -85,9 +92,30 @@ export default {
     align-items: center;
   }
 
-  .buttons-horizontal {
+  .horizontal-flex {
     display: flex;
     flex-direction: row;
+    margin: 0 0 40px 0;
+  }
+
+  .centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .selected {
+    filter: drop-shadow(0 0 10px gold);
+  }
+
+  img {
+    margin: 0 20px 0 20px;
+  }
+
+  label {
+    font-family: 'Boogaloo', cursive;
+    font-size: 20px;
+    color: #003399;
   }
 
 </style>

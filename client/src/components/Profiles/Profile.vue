@@ -1,7 +1,7 @@
 <template lang="html">
   <div v-on:click="handleSelectProfile" class="profile">
     <h3>{{ profile.name }}</h3>
-    <img v-bind:src="avatarSRC" alt="avatar-picture" height="100px">
+    <img v-bind:src="avatarSRC" alt="avatar-picture" height="80px">
     <h4>Star Points: {{ profile.starPoints }}</h4>
   </div>
 </template>
@@ -28,10 +28,10 @@ export default {
 <style lang="css" scoped>
 
   .profile {
-    background-color: pink;
+    border: solid 2px midnightblue;
     width: 200px;
     height: 200px;
-    margin: 20px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +39,8 @@ export default {
   }
 
   .profile:hover {
-    background-color: green;
+    background-color: white;
+    box-shadow: 0 0 20px gold;
   }
 
 </style>

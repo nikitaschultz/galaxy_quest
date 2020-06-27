@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="profile-container">
-    <h2>Who's exploring today?</h2>
-    <div v-if="createProfileView === false">
-      <profile-grid  :profiles="profiles" />
+    <div class="centered" v-if="createProfileView === false">
+      <h2>Who's exploring today?</h2>
+      <profile-grid  :profiles="profiles" /><br><br>
       <button v-if="createProfileView === false" v-on:click="toggleCreateView" type="button" name="button">Add a new explorer</button>
     </div>
-    <div  v-if="createProfileView">
+    <div class="centered" v-if="createProfileView">
       <create-profile />
     </div>
   </div>
@@ -48,12 +48,19 @@ export default {
 <style lang="css" scoped>
 
   .profile-container {
-    background-color: blue;
+    background-color: white;
     width: 85vw;
     height: 75vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 0 30px cornflowerblue;
+  }
+
+  .centered {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
   }
 
 </style>

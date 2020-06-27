@@ -1,0 +1,51 @@
+h1 {
+  font-family: 'Boogaloo', cursive;
+  font-size: 70px;
+  margin: 15px 0px 25px 0px;
+  color: white;
+  text-shadow: 0px 0px 30px cornflowerblue;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+h3 {
+  font-size: 25px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+p {
+  font-size: 20px;
+}
+
+h2, h3, h4 {
+  font-family: 'Boogaloo', cursive;
+  color: #003399;
+}
+
+button {
+  font-family: 'Boogaloo', cursive;
+  font-weight: bold;
+  font-size: 25px;
+  background-color: #003399;
+  color: white;
+  border: 1px solid #003399;
+  border-radius: 15px;
+  min-width: 40px;
+  height: 45px;
+  padding: 0 10px 0 10px;
+  margin: 0px 5px 0px 5px
+}
+
+button:hover {
+  color: #003399;
+  background-color: white;
+}
+
+body {
+  background-image: radial-gradient(blue, midnightblue, black, black)
+}

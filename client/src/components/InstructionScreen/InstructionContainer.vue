@@ -30,10 +30,11 @@ export default {
 <style lang="css" scoped>
 
   .instruction-container {
-    background-color: blue;
+    background-color: white;
     width: 23vw;
     height: 75vh;
     margin: 0 0 0 0.5vw;
+    box-shadow: 0 0 30px cornflowerblue;
   }
 
 </style>
