@@ -4,7 +4,7 @@
     <form class="new-profile">
       <div class="horizontal-flex">
         <label for="name">Name:</label>
-        <input type="text" v-model:value="profileName">
+        <input class="text-box" type="text" v-model:value="profileName">
       </div>
       <div class="horizontal-flex">
         <img v-for="avatar in avatars" v-on:click="selectAvatar(avatar)" :src="avatar.url" :value="avatar.name" height="100px" v-bind:class="{selected: avatar.selected}">
@@ -114,8 +114,10 @@ export default {
 
   label {
     font-family: 'Boogaloo', cursive;
-    font-size: 20px;
+    font-size: 30px;
     color: #003399;
+    margin: 0 20px 0 0;
   }
+
 
 </style>

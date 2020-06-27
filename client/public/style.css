@@ -11,20 +11,21 @@ h2 {
 }
 
 h3 {
-  font-size: 25px;
+  font-size: 30px;
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 p {
-  font-size: 20px;
+  font-size: 25px;
 }
 
-h2, h3, h4 {
+h2, h3, h4, p {
   font-family: 'Boogaloo', cursive;
   color: #003399;
+  margin: 15px 0;
 }
 
 button {
@@ -36,7 +37,7 @@ button {
   border: 1px solid #003399;
   border-radius: 15px;
   min-width: 40px;
-  height: 45px;
+  height: 40px;
   padding: 0 10px 0 10px;
   margin: 0px 5px 0px 5px
 }
@@ -48,4 +49,15 @@ button:hover {
 
 body {
   background-image: radial-gradient(blue, midnightblue, black, black)
+}
+
+.text-box {
+  height: 40px;
+  min-width: 400px;
+  border: 2px solid #003399;
+  border-radius: 10px;
+  font-family: 'Boogaloo', cursive;
+  font-size: 25px;
+  color: #003399;
+  padding: 0 10px;
 }
