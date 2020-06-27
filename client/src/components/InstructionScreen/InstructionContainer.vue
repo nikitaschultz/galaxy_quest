@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="instruction-container">
     <home v-if="homeScreenViewInstructions" :activeProfile="activeProfile" />
+    {{tester}}
   </div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
   props: ["homeScreenViewInstructions", "activeProfile", "activeGame"],
   data(){
     return {
-      selectedPlanet: null
+      selectedPlanet: null,
+      tester: "<p> Test </p>"
     }
   },
   components: {
