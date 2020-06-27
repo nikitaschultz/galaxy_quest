@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="centered">
-    <h2>New Explorer</h2>
+    <h2>New Explorer</h2><br>
     <form class="new-profile">
       <div class="horizontal-flex">
         <label for="name">Name:</label>

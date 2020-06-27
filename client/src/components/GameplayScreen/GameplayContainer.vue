@@ -30,7 +30,7 @@ export default {
 <style lang="css" scoped>
 
   .gameplay-container {
-    background-color: white;
+    background-color: radial-gradient(midnightblue, indigo, black, black, black);
     width: 61vw;
     height: 75vh;
     margin: 0 0.5vw 0 0;

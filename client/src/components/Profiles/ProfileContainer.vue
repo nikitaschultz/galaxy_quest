@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="profile-container">
     <div class="centered" v-if="createProfileView === false">
-      <h2>Who's exploring today?</h2>
+      <h2>Who's exploring today?</h2><br>
       <profile-grid  :profiles="profiles" /><br><br>
       <button v-if="createProfileView === false" v-on:click="toggleCreateView" type="button" name="button">Add a new explorer</button>
     </div>

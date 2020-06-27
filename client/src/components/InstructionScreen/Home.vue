@@ -1,7 +1,7 @@
 <template lang="html">
-  <div>
+  <div class="home-instructions">
     <h2>Welcome explorer!</h2>
-    <p>Click a planet to continue on your quest!</p>
+    <p>Click on any planet to continue on your quest!</p><br><br>
     <div class="profile">
       <h3>{{ activeProfile.name }}</h3>
       <img v-bind:src="avatarSRC" alt="avatar-picture" height="100px">
@@ -23,4 +23,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+  .home-instructions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
 </style>

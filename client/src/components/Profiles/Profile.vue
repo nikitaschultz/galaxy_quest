@@ -30,7 +30,7 @@ export default {
   .profile {
     border: solid 2px midnightblue;
     width: 200px;
-    height: 200px;
+    height: 190px;
     margin: 10px;
     display: flex;
     flex-direction: column;

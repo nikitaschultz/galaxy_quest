@@ -20,6 +20,7 @@ export default {
 
   .profile-grid {
     display: flex;
+    flex-wrap: wrap;
   }
 
 </style>
