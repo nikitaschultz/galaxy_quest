@@ -111,12 +111,11 @@ export default {
         ctx.clearRect(currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight);
         ctx.save();
         ctx.globalAlpha = 0.9;
-        ctx.drawImage(flagImage, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
+        ctx.drawImage(image, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
         ctx.restore();
         document.onmousemove = updatePuzzle;
         document.onmouseup = pieceDropped;
       }
-
     }
 
     function checkPieceClicked(){
@@ -131,6 +130,43 @@ export default {
         }
       }
       return null;
+    }
+
+    function updatePuzzle(event){
+      currentDropPiece = null;
+      if(event.layerX >= 0 && event.layerY >= 0){
+        mouse.x = event.layerX;
+        mouse.y = event.layerY;
+      }
+      ctx.clearRect(0, 0, puzzleWidth, puzzleHeight);
+      let i;
+      let piece;
+      for(i = 0; i < pieces.length; i++){
+        piece = pieces[i];
+        if(piece === currentPiece){
+          continue;
+        }
+        ctx.drawImage(image, piece.sx, piece.sy, pieceWidth, pieceHeight, piece.xPos, piece.yPos, pieceWidth, pieceHeight);
+        ctx.strokeRect(piece.xPos, piece.yPos, pieceWidth, pieceHeight);
+        if(currentDropPiece === null){
+          if(mouse.x < piece.xPos || mouse.x > (piece.xPos + pieceWidth) || mouse.y < piece.yPos || mouse.y > (piece.yPos + pieceHeight)){
+            //continue
+          }
+          else {
+            currentDropPiece = piece;
+            ctx.save();
+            ctx.globalAlpha = 0.4;
+            ctx.fillStyle = 'white';
+            ctx.fillRect(currentDropPiece.xPos, currentDropPiece.yPos, pieceWidth, pieceHeight);
+            ctx.restore();
+          }
+        }
+        ctx.save()
+        ctx.globalAlpha = 0.6;
+        ctx.drawImage(image, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight /2), pieceWidth, pieceHeight)
+        ctx.restore();
+        ctx.strokeRect(mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
+      }
     }
   },
   methods: {
