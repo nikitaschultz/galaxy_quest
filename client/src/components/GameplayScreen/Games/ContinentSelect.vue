@@ -1,11 +1,13 @@
 <template lang="html">
   <div class="game-container">
-    <GChart type="GeoChart" :data="chartData" :options="chartOptions" :events="chartEvents" ref="gChart" />
+    <button v-if="loading" v-on:click="loadInstructions" type="button" name="button">Let's Go!</button>
+    <GChart v-if="!loading" type="GeoChart" :data="chartData" :options="chartOptions" :events="chartEvents" ref="gChart" /><br>
   </div>
 </template>
 
 <script>
 import { GChart } from 'vue-google-charts';
+import { eventBus } from '../../../main.js'
 
 export default {
   name: "continent-select",
@@ -14,6 +16,9 @@ export default {
   },
   data(){
     return {
+      loading: true,
+      winStatus: false,
+      continentArray: ["Africa", "Europe", "The Americas", "Asia", "Oceania"],
       correctAnswer: null,
       chartOptions: {
           title: "Continents of the World",
@@ -27,21 +32,43 @@ export default {
         },
       chartData: [
           ['Code', 'Continent', 'Answer', {role: 'tooltip'}],
-          ['002', 'Red Continent', 0, "Selected!"],
-          ['150', 'Green Continent', 1, "Selected!"],
-          ['019', 'Blue Continent', 2, "Selected!"],
-          ['142', 'Yellow Continent', 3, "Selected!"],
-          ['009', 'Pink Continent', 4, "Selected!"]
+          ['002', 'Africa', 0, "You selected Africa!"],
+          ['150', 'Europe', 1, "You selected Europe!"],
+          ['019', 'The Americas', 2, "You selected the Americas!"],
+          ['142', 'Asia', 3, "You selected Asia!"],
+          ['009', 'Oceania', 4, "You selected Oceania!"]
         ],
       chartEvents: {
         'select': () => {
           const chart = this.$refs.gChart.chartObject;
-          const selectionIndex = chart.getSelection()[0].row;
-          const countryArray = ["Africa", "Europe", "Americas", "Asia", "Oceania"]
-          this.selectedAnswer = countryArray[selectionIndex];
+          if(chart.getSelection()[0]){
+            const selectionIndex = chart.getSelection()[0].row;
+            this.selectedAnswer = this.continentArray[selectionIndex];
+            this.checkAnswer();
+          }
         }
       },
       selectedAnswer: null
+    }
+  },
+  mounted(){
+    this.getCorrectAnswer()
+  },
+  methods: {
+    getCorrectAnswer(){
+      const answer = this.continentArray[Math.floor(Math.random() * 5)]
+      this.correctAnswer = answer
+    },
+    loadInstructions(){
+      eventBus.$emit('continent-select-game-loaded', this.correctAnswer)
+      this.loading = false;
+    },
+    checkAnswer(){
+      if(this.selectedAnswer === this.correctAnswer){
+        eventBus.$emit('continent-select-game-won')
+      }else{
+        eventBus.$emit('continent-select-game-lost')
+      }
     }
   }
 }
