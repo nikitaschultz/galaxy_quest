@@ -37,7 +37,7 @@ export default {
     canvas.style.border = "2px solid midnightblue";
 
     let pieces = [];
-    let mouse = {x:0, y:0};
+    let mouse = {x: 0, y: 0};
     let currentPiece = null;
     let currentDropPiece = null;
 
@@ -45,7 +45,6 @@ export default {
       ctx.drawImage(image, 0, 0, puzzleWidth, puzzleHeight);
       buildPieces();
     }
-
 
     function buildPieces(){
       let i;
@@ -60,7 +59,7 @@ export default {
         xPos += pieceWidth
         if(xPos >= puzzleWidth){
           xPos = 0;
-          yPos += puzzleHeight
+          yPos += pieceHeight;
         }
       }
       document.onmousedown = prepareShuffle;
@@ -103,7 +102,35 @@ export default {
     }
 
     function onPuzzleClick(event){
+      if(event.layerX >= 0 && event.layerY >= 0){
+        mouse.x = event.layerX;
+        mouse.y = event.layerY;
+      }
+      currentPiece = checkPieceClicked();
+      if(currentPiece !== null){
+        ctx.clearRect(currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight);
+        ctx.save();
+        ctx.globalAlpha = 0.9;
+        ctx.drawImage(flagImage, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
+        ctx.restore();
+        document.onmousemove = updatePuzzle;
+        document.onmouseup = pieceDropped;
+      }
 
+    }
+
+    function checkPieceClicked(){
+      let i;
+      let piece;
+      for(i = 0; i < pieces.length; i++){
+        piece = pieces[i];
+        if(mouse.x < piece.xPos || mouse.x > (piece.xPos + pieceWidth) || mouse.y < piece.yPos || mouse.y > (piece.yPos + piece.Height)){
+        //not the piece
+        }else{
+          return piece
+        }
+      }
+      return null;
     }
   },
   methods: {
