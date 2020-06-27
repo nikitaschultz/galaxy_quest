@@ -20,9 +20,11 @@ h4 {
 
 p {
   font-size: 25px;
+  font-family: 'Boogaloo', cursive;
+  color: black;
 }
 
-h2, h3, h4, p {
+h2, h3, h4 {
   font-family: 'Boogaloo', cursive;
   color: #003399;
   margin: 15px 0;

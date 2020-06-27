@@ -9,20 +9,29 @@
       </div>
       <div v-if="ready">
         <p>The star has fallen into {{ correctAnswer }}!</p>
-        <p>Please will you click on the continent of {{ correctAnswer }} so we know where to look!</p>
+        <p>Please click on the continent of {{ correctAnswer }} so we know where to look!</p>
       </div>
     </div>
     <div v-if="!resultPending">
-      <div v-if="gameWon">
-        <p>Hooray!  We found it!</p>
-        <p>Thank you explorer!</p>
-        <p>Please take this star with you as a token of our gratitude!</p>
+      <div v-if="!attemptsExhausted">
+        <div v-if="gameWon">
+          <p>Hooray!  We found it!</p>
+          <p>Thank you explorer!</p>
+          <p>Please take this star with you as a token of our gratitude!</p>
+        </div>
+        <div v-if="!gameWon">
+          <p>Oh no!  We can't find the star!</p>
+          <p>That was the wrong continent.</p>
+          <p>The star is in {{ correctAnswer }}.</p>
+          <p>Would you like to try again?</p>
+          <button v-on:click="resetGame" name="button">Try Again</button>
+        </div>
       </div>
-      <div v-if="!gameWon">
-        <p>Oh no!  We can't find the star!</p>
-        <p>Looks like that was the wrong continent.</p>
-        <p>Would you like to try again?</p>
-        <button v-on:click="resetGame" name="button">Try Again</button>
+      <div v-if="attemptsExhausted">
+        <p>We couldn't find the star.</p>
+        <p>It fell in {{ correctAnswer }} which is the {{ colourCodes[correctAnswer] }} continent on the map.</p>
+        <p>We'll find it next time!</p>
+        <p>Would you like to play again?</p>
       </div>
     </div>
   </div>
@@ -38,7 +47,16 @@ export default {
       correctAnswer: "",
       ready: false,
       resultPending: true,
-      gameWon: false
+      gameWon: false,
+      attempts: 0,
+      attemptsExhausted: false,
+      colourCodes: {
+        "Africa": "red",
+        "Oceania": "pink",
+        "Europe": "green",
+        "Asia": "yellow",
+        "The Americas": "blue"
+      }
     }
   },
   mounted(){
@@ -53,6 +71,10 @@ export default {
     })
 
     eventBus.$on('continent-select-game-lost', () => {
+      this.attempts += 1;
+      if(this.attempts > 2){
+        this.attemptsExhausted = true;
+      }
       this.resultPending = false;
     })
   },
