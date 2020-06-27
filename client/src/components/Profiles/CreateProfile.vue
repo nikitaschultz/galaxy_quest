@@ -112,6 +112,10 @@ export default {
     margin: 0 20px 0 20px;
   }
 
+  img:hover {
+    filter: drop-shadow(0 0 10px gold);
+  }
+
   label {
     font-family: 'Boogaloo', cursive;
     font-size: 30px;

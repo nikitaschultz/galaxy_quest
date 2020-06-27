@@ -1,6 +1,5 @@
 <template lang="html">
-  <div>
-    <h2>Continents of the World</h2>
+  <div class="game-container">
     <GChart type="GeoChart" :data="chartData" :options="chartOptions" :events="chartEvents" ref="gChart" />
   </div>
 </template>
@@ -15,37 +14,34 @@ export default {
   },
   data(){
     return {
-      correctAnswer: "Asia",
+      correctAnswer: null,
       chartOptions: {
           title: "Continents of the World",
           region: 'world',
           resolution: 'continents',
-          colorAxis: {colors: ['red', 'green', 'blue', 'yellow', 'orange']},
+          colorAxis: {colors: ['orangered', 'limegreen', 'cornflowerblue', 'gold', 'violet']},
           legend: 'none',
-          height: 300,
+          height: 400,
           backgroundColor: 'none',
-          tooltip: {isHtml: true, trigger: 'none'},
+          tooltip: {isHtml: true, trigger: 'selection'},
         },
       chartData: [
           ['Code', 'Continent', 'Answer', {role: 'tooltip'}],
-          ['002', '????', 1, "Selected!"],
-          ['150', '????', 2, "Selected!"],
-          ['019', '????', 3, "Selected!"],
-          ['142', '????', 4, "Selected!"],
-          ['009', '????', 5, "Selected!"]
+          ['002', 'Red Continent', 0, "Selected!"],
+          ['150', 'Green Continent', 1, "Selected!"],
+          ['019', 'Blue Continent', 2, "Selected!"],
+          ['142', 'Yellow Continent', 3, "Selected!"],
+          ['009', 'Pink Continent', 4, "Selected!"]
         ],
       chartEvents: {
         'select': () => {
           const chart = this.$refs.gChart.chartObject;
-          const selection = chart.getSelection();
-          console.log(selection);
+          const selectionIndex = chart.getSelection()[0].row;
+          const countryArray = ["Africa", "Europe", "Americas", "Asia", "Oceania"]
+          this.selectedAnswer = countryArray[selectionIndex];
         }
-      }
-    }
-  },
-  computed: {
-    selectedContinent(){
-      return GChart.getSelection()
+      },
+      selectedAnswer: null
     }
   }
 }
@@ -53,9 +49,14 @@ export default {
 
 <style lang="css" scoped>
 
-  h2 {
-    text-align: center;
-    color: white;
+  .game-container {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
 </style>
