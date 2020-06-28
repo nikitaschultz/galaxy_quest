@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="gameplay-container">
-    <landmark-puzzle />
+    <win-screen />
     <home :planets="planets" v-if="homeScreenViewGame" />
   </div>
 </template>
@@ -10,6 +10,7 @@ import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
 import LandmarkPuzzle from './Games/LandmarkPuzzle.vue';
+import WinScreen from './WinScreen.vue';
 
 export default {
   name: "gameplay-container",
@@ -17,7 +18,8 @@ export default {
   components: {
     "home": Home,
     "continent-select": ContinentSelect,
-    "landmark-puzzle": LandmarkPuzzle
+    "landmark-puzzle": LandmarkPuzzle,
+    "win-screen": WinScreen
   },
   data(){
     return {
