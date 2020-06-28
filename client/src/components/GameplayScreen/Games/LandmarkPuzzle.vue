@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { eventBus } from '../../../main.js';
 import LandmarkPuzzleService from '../../../services/Games/LandmarkPuzzleService.js';
 
 export default {
@@ -29,21 +30,22 @@ export default {
   methods: {
     loadPuzzle(){
       this.loading = false;
+      eventBus.$emit('landmark-puzzle-game-ready');
     },
     fetchLandmarks(){
       LandmarkPuzzleService.getLandmarks()
       .then((landmarks) => {
         this.landmarks = landmarks;
-        const selectedLandmark = landmarks[Math.floor(Math.random() * landmarks.length)]
-        this.selectedLandmark = selectedLandmark
+        const selectedLandmark = landmarks[Math.floor(Math.random() * landmarks.length)];
+        this.selectedLandmark = selectedLandmark;
         this.puzzleImage = require("@/assets/landmarkpuzzle/" + selectedLandmark.image + ".png");
-        this.createPuzzle()
+        eventBus.$emit('landmark-puzzle-game-loaded', selectedLandmark);
+        this.createPuzzle();
       })
     },
     createPuzzle(){
       const image = new Image();
       image.src = this.puzzleImage;
-
 
       const puzzleWidth = 600;
       const puzzleHeight = 400;
@@ -206,6 +208,7 @@ export default {
       }
 
       function resetPuzzleAndCheckWin(){
+        eventBus.$emit('landmark-puzzle-game-shuffle-fact');
         ctx.clearRect(0,0, puzzleWidth, puzzleHeight);
         let gameWin = true;
         let i;
@@ -227,6 +230,7 @@ export default {
         document.onmousedown = null;
         document.onmousemove = null;
         document.onmouseup = null;
+        eventBus.$emit('landmark-puzzle-game-won')
       }
     }
   }
