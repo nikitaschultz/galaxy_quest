@@ -1,6 +1,8 @@
 <template lang="html">
   <div v-if="animalObjects" class="row">
+
     <div class="column">
+      <p> Remaining lives : {{this.playerLives}}</p>
       <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
       <img v-if="showImage[0]" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
       <img v-if="!showImage[1]" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">

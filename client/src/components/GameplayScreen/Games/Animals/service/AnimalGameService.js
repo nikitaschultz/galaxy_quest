@@ -1,7 +1,7 @@
-const baseURL = 'http://localhost:3000/api/games/';
+const baseURL = 'http://localhost:3000/api/animals/';
 
 export default {
-  getPlanets(){
+  getAnimals(){
     return fetch(baseURL)
     .then(res => res.json())
   }
