@@ -14,9 +14,15 @@ MongoClient.connect('mongodb://localhost:27017')
     const profilesCollection = db.collection('profiles');
     const profilesRouter = createRouter(profilesCollection);
     app.use('/api/profiles', profilesRouter);
+
     const planetsCollection = db.collection('planets');
     const planetsRouter = createRouter(planetsCollection);
     app.use('/api/planets', planetsRouter)
+    ///////////////////
+    ///////////////////
+    const animalsCollection = db.collection('animals');
+    const animalsRouter = createRouter(animalsCollection);
+    app.use('/api/animals', animalsRouter)
   })
   .catch(console.err);
 

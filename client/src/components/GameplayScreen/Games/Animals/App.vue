@@ -1,12 +1,12 @@
 <template lang="html">
-  <div class="row">
+  <div v-if="animalObjects" class="row">
     <div class="column">
-      <img src="@/assets/animals/donkey.jpg" alt="donkey">
-      <img src="@/assets/animals/horse.jpg" alt="horse">
+      <img v-bind:src="imageOne">
+      <img v-bind:src="imageTwo">
     </div>
     <div class="column">
-      <img src="@/assets/animals/pig.jpg" alt="pig">
-      <img src="@/assets/animals/sheep.jpg" alt="sheep">
+      <img v-bind:src="imageThree">
+      <img v-bind:src="imageFour">
     </div>
     <div class="column">
       <p>Where is the {{this.answer}}?</p>
@@ -16,17 +16,59 @@
 
 <script>
 import {eventBus} from './main.js';
-
+import AnimalGameService from './service/AnimalGameService.js'
 
 export default {
   data(){
     return {
+      // result of mounted fetch
+      animalObjects: null,
       // the players answer
       answer: null,
 
       // the expected answer
-      solution: "donkey",
-      dataPoint2: "dataPoint2"
+      solution: null
+    }
+  },
+  mounted(){
+    this.fetchGameData();
+  },
+  methods: {
+    fetchGameData(){
+      AnimalGameService.getAnimals()
+      .then (data => this.animalObjects = this.shuffleArray(data))
+    },
+    shuffleArray(array){
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+  },
+  computed: {
+
+    imageOne(){
+      return require("@/assets/animals/" + this.animalObjects[0].name.toLowerCase() + ".jpg")
+    },
+    imageTwo(){
+      return require("@/assets/animals/" + this.animalObjects[1].name.toLowerCase() + ".jpg")
+    },
+    imageThree(){
+      return require("@/assets/animals/" + this.animalObjects[2].name.toLowerCase() + ".jpg")
+    },
+    imageFour(){
+      return require("@/assets/animals/" + this.animalObjects[3].name.toLowerCase() + ".jpg")
     }
   }
 }
@@ -52,6 +94,3 @@ export default {
 }
 
 </style>
-
-<!-- placeholder data before the game is wired into the db -->
-databaseData =

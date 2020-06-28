@@ -31,8 +31,33 @@ db.planets.insertMany([
   }
 ])
 
-db.games.insertMany([
-  { animals: [
+// db.games.insertMany([
+//   { animals: [
+//     {
+//       name: "Donkey",
+//     },
+//     {
+//       name: "Goat"
+//     },
+//     {
+//       name: "Goose"
+//     },
+//     {
+//       name: "Horse"
+//     },
+//     {
+//       name: "Pig"
+//     },
+//     {
+//       name: "Sheep"
+//     }
+//   ]},
+//   {tester: "test"},
+//   {tester2: "alsoatest"}
+//
+// ])
+
+db.animals.insertMany([
     {
       name: "Donkey",
     },
@@ -51,8 +76,4 @@ db.games.insertMany([
     {
       name: "Sheep"
     }
-  ]},
-  {tester: "test"},
-  {tester2: "alsoatest"}
-
 ])
