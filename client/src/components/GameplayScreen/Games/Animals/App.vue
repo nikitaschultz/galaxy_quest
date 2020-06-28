@@ -1,15 +1,24 @@
 <template lang="html">
   <div v-if="animalObjects" class="row">
     <div class="column">
-      <img v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
-      <img v-bind:src="imageTwo" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
+      <img v-if="!showImage.one" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
+      <img v-if="showImage.one" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
+      <img v-if="!showImage.two" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
+      <img v-if="showImage.two" v-bind:src="imageTwo" v-bind:name="this.animalObjects[1].name">
     </div>
     <div class="column">
-      <img v-bind:src="imageThree" v-bind:name="this.animalObjects[2].name" v-on:click="handleClickThree">
-      <img v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
+      <img v-if="!showImage.three" v-bind:src="imageThreeShadow" v-bind:name="this.animalObjects[2].name" v-on:click="handleClickThree">
+      <img v-if="showImage.three" v-bind:src="imageThree" v-bind:name="this.animalObjects[2].name">
+      <img v-if="!showImage.four" v-bind:src="imageFourShadow" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
+      <img v-if="showImage.four" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
     </div>
     <div class="column">
       <p>Where is the {{this.solution}}?</p>
+    </div>
+    <div class="column">
+      <button v-if="this.playerAnswer && this.playerAnswer != this.solution" type="button" name="button">Try Again</button>
+      <button v-if="this.playerAnswer === this.solution &&& this.gameRound != 3" type="button" name="button">Next Round</button>
+      <button v-if="this.playerAnswer === this.solution &&& this.gameRound === 3" type="button" name="button">Finish</button>
     </div>
   </div>
 </template>
@@ -25,6 +34,15 @@ export default {
       animalObjects: null,
       // the players answer
       playerAnswer: "",
+      /// round counter
+      gameRound: 1,
+      /// hash tag picture logic
+      showImage: {
+        one: false,
+        two: false,
+        three: false,
+        four: false,
+      }
     }
   },
   mounted(){
@@ -57,16 +75,28 @@ export default {
     /////Game logic ////
 
     handleClickOne(){
-      this.playerAnswer = this.animalObjects[0].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[0].name;
+        this.showImage.one = true;
+      }
     },
     handleClickTwo(){
-      this.playerAnswer = this.animalObjects[1].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[1].name;
+        this.showImage.two = true;
+      }
     },
     handleClickThree(){
-      this.playerAnswer = this.animalObjects[2].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[2].name;
+        this.showImage.three = true;
+      }
     },
     handleClickFour(){
-      this.playerAnswer = this.animalObjects[3].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[3].name;
+        this.showImage.four = true;
+      }
     },
 
     ////////////////////
@@ -85,9 +115,21 @@ export default {
     imageFour(){
       return require("@/assets/animals/" + this.animalObjects[3].name.toLowerCase() + ".jpg")
     },
+    imageOneShadow(){
+      return require("@/assets/animals/" + this.animalObjects[0].name.toLowerCase() + "_shadow.jpg")
+    },
+    imageTwoShadow(){
+      return require("@/assets/animals/" + this.animalObjects[1].name.toLowerCase() + "_shadow.jpg")
+    },
+    imageThreeShadow(){
+      return require("@/assets/animals/" + this.animalObjects[2].name.toLowerCase() + "_shadow.jpg")
+    },
+    imageFourShadow(){
+      return require("@/assets/animals/" + this.animalObjects[3].name.toLowerCase() + "_shadow.jpg")
+    },
     ///Generate the answer to the game
     solution: function(){
-      let answerIndex = Math.floor(Math.random() * this.animalObjects.length);
+      let answerIndex = Math.floor(Math.random() * 4);
       return this.animalObjects[answerIndex].name;
     }
   }
