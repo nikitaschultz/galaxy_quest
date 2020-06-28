@@ -79,7 +79,7 @@ export default {
         }
       })
       animationAge += 1;
-      if (animationAge > 40){
+      if (animationAge > 50){
         resetSparks();
       }
       drawStar();

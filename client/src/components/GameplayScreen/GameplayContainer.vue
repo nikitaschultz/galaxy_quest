@@ -1,7 +1,12 @@
 <template lang="html">
   <div class="gameplay-container">
-    <win-screen />
-    <home :planets="planets" v-if="homeScreenViewGame" />
+    <div v-if="!gameWinStatus">
+      <landmark-puzzle />
+      <home :planets="planets" v-if="homeScreenViewGame" />
+    </div>
+    <div v-if="gameWinStatus">
+      <win-screen />
+    </div>
   </div>
 </template>
 
@@ -14,7 +19,7 @@ import WinScreen from './WinScreen.vue';
 
 export default {
   name: "gameplay-container",
-  props: ["planets", "homeScreenViewGame"],
+  props: ["planets", "homeScreenViewGame", "gameWinStatus"],
   components: {
     "home": Home,
     "continent-select": ContinentSelect,

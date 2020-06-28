@@ -3,7 +3,7 @@
     <h1>Galaxy Quest</h1>
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
-        <gameplay-container :homeScreenViewGame="homeScreenViewGame" :activeProfile="activeProfile" :planets="planets" v-if="!profileView" />
+        <gameplay-container :homeScreenViewGame="homeScreenViewGame" :gameWinStatus="gameWinStatus" :activeProfile="activeProfile" :planets="planets" v-if="!profileView" />
         <instruction-container :homeScreenViewInstructions="homeScreenViewInstructions" :activeProfile="activeProfile" v-if="!profileView" />
       </div>
   </div>
@@ -32,7 +32,8 @@ export default {
       activeProfile: null,
       homeScreenViewGame: false,
       homeScreenViewInstructions: false,
-      planets: []
+      planets: [],
+      gameWinStatus: false
     }
   },
   mounted(){
@@ -56,6 +57,10 @@ export default {
 
     eventBus.$on('planet-selected', (planet) => {
       this.homeScreenViewInstructions = false;
+    })
+
+    eventBus.$on('landmark-puzzle-game-won', () => {
+      this.gameWinStatus = true;
     })
   },
   methods: {
