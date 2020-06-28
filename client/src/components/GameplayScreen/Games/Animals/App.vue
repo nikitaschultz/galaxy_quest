@@ -1,24 +1,26 @@
 <template lang="html">
   <div v-if="animalObjects" class="row">
     <div class="column">
-      <img v-if="!showImage.one" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
-      <img v-if="showImage.one" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
-      <img v-if="!showImage.two" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
-      <img v-if="showImage.two" v-bind:src="imageTwo" v-bind:name="this.animalObjects[1].name">
+      <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
+      <img v-if="showImage[0]" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
+      <img v-if="!showImage[1]" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
+      <img v-if="showImage[1]" v-bind:src="imageTwo" v-bind:name="this.animalObjects[1].name">
     </div>
     <div class="column">
-      <img v-if="!showImage.three" v-bind:src="imageThreeShadow" v-bind:name="this.animalObjects[2].name" v-on:click="handleClickThree">
-      <img v-if="showImage.three" v-bind:src="imageThree" v-bind:name="this.animalObjects[2].name">
-      <img v-if="!showImage.four" v-bind:src="imageFourShadow" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
-      <img v-if="showImage.four" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
+      <img v-if="!showImage[2]" v-bind:src="imageThreeShadow" v-bind:name="this.animalObjects[2].name" v-on:click="handleClickThree">
+      <img v-if="showImage[2]" v-bind:src="imageThree" v-bind:name="this.animalObjects[2].name">
+      <img v-if="!showImage[3]" v-bind:src="imageFourShadow" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
+      <img v-if="showImage[3]" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
     </div>
     <div class="column">
-      <p>Where is the {{this.solution}}?</p>
+      <p v-if="this.playerAnswer != this.solution">Where is the {{this.solution}}?</p>
+      <p v-if="this.playerAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
     </div>
     <div class="column">
-      <button v-if="this.playerAnswer && this.playerAnswer != this.solution" type="button" name="button">Try Again</button>
-      <button v-if="this.playerAnswer === this.solution &&& this.gameRound != 3" type="button" name="button">Next Round</button>
-      <button v-if="this.playerAnswer === this.solution &&& this.gameRound === 3" type="button" name="button">Finish</button>
+      <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
+      <button v-if="this.playerAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
+      <button v-if="this.playerAnswer === this.solution && this.gameRound === 3" type="button" name="button">Finish</button>
+      <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
     </div>
   </div>
 </template>
@@ -36,13 +38,10 @@ export default {
       playerAnswer: "",
       /// round counter
       gameRound: 1,
+      /// lives counter
+      playerLives: 3,
       /// hash tag picture logic
-      showImage: {
-        one: false,
-        two: false,
-        three: false,
-        four: false,
-      }
+      showImage: [false,false,false,false]
     }
   },
   mounted(){
@@ -77,27 +76,39 @@ export default {
     handleClickOne(){
       if(!this.playerAnswer){
         this.playerAnswer = this.animalObjects[0].name;
-        this.showImage.one = true;
+        this.showImage[0] = true;
       }
     },
     handleClickTwo(){
       if(!this.playerAnswer){
         this.playerAnswer = this.animalObjects[1].name;
-        this.showImage.two = true;
+        this.showImage[1] = true;
       }
     },
     handleClickThree(){
       if(!this.playerAnswer){
         this.playerAnswer = this.animalObjects[2].name;
-        this.showImage.three = true;
+        this.showImage[2] = true;
       }
     },
     handleClickFour(){
       if(!this.playerAnswer){
         this.playerAnswer = this.animalObjects[3].name;
-        this.showImage.four = true;
+        this.showImage[3] = true;
       }
     },
+    handleTryAgain(){
+      this.playerAnswer = "";
+      this.playerLives --;
+      this.showImage.forEach((item,index) => {
+        this.showImage[index] = false;
+      });
+    },
+    handleNextRound(){
+      this.gameRound ++;
+      this.handleTryAgain();
+      this.fetchGameData();
+    }
 
     ////////////////////
   },
