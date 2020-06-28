@@ -6,8 +6,6 @@
 </template>
 
 <script>
-import sydneyImage from '../../../assets/sydney-opera-house.jpg';
-
 export default {
   name: "landmark-puzzle",
   data(){
@@ -22,7 +20,7 @@ export default {
   },
   mounted(){
     const image = new Image();
-    image.src = sydneyImage;
+    image.src = require('@/assets/landmarkpuzzle/bigben.png');
     image.width = 600;
     image.height = 400;
 
@@ -102,11 +100,15 @@ export default {
     }
 
     function onPuzzleClick(event){
-      if(event.layerX >= 0 && event.layerY >= 0){
+      let xEval = event.layerX >= 0 && event.layerX <= puzzleWidth;
+      let yEval = event.layerY >= 0 && event.layerY <= puzzleHeight;
+      if(xEval && yEval){
         mouse.x = event.layerX;
         mouse.y = event.layerY;
+        currentPiece = checkPieceClicked();
+      }else{
+        currentPiece = null;
       }
-      currentPiece = checkPieceClicked();
       if(currentPiece !== null){
         ctx.clearRect(currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight);
         ctx.save();
@@ -114,7 +116,7 @@ export default {
         ctx.drawImage(image, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
         ctx.restore();
         document.onmousemove = updatePuzzle;
-        document.onmouseup = pieceDropped;
+        document.onmousedown = pieceDropped;
       }
     }
 
@@ -123,18 +125,21 @@ export default {
       let piece;
       for(i = 0; i < pieces.length; i++){
         piece = pieces[i];
-        if(mouse.x < piece.xPos || mouse.x > (piece.xPos + pieceWidth) || mouse.y < piece.yPos || mouse.y > (piece.yPos + piece.Height)){
-        //not the piece
-        }else{
-          return piece
+        let xEval = (mouse.x < (piece.xPos + pieceWidth) && mouse.x > piece.xPos)
+        let yEval = (mouse.y < (piece.yPos + pieceHeight) && mouse.y > piece.yPos)
+        if(!xEval || !yEval){
+          continue;
         }
-      }
+        return piece;
       return null;
+      }
     }
 
     function updatePuzzle(event){
       currentDropPiece = null;
-      if(event.layerX >= 0 && event.layerY >= 0){
+      let xEval = event.layerX >= 0 && event.layerX <= puzzleWidth;
+      let yEval = event.layerY >= 0 && event.layerY <= puzzleHeight;
+      if(xEval && yEval){
         mouse.x = event.layerX;
         mouse.y = event.layerY;
       }
@@ -148,18 +153,15 @@ export default {
         }
         ctx.drawImage(image, piece.sx, piece.sy, pieceWidth, pieceHeight, piece.xPos, piece.yPos, pieceWidth, pieceHeight);
         ctx.strokeRect(piece.xPos, piece.yPos, pieceWidth, pieceHeight);
-        if(currentDropPiece === null){
-          if(mouse.x < piece.xPos || mouse.x > (piece.xPos + pieceWidth) || mouse.y < piece.yPos || mouse.y > (piece.yPos + pieceHeight)){
-            //continue
-          }
-          else {
-            currentDropPiece = piece;
-            ctx.save();
-            ctx.globalAlpha = 0.4;
-            ctx.fillStyle = 'white';
-            ctx.fillRect(currentDropPiece.xPos, currentDropPiece.yPos, pieceWidth, pieceHeight);
-            ctx.restore();
-          }
+        let xEval = (mouse.x <= (piece.xPos + pieceWidth) && mouse.x >= piece.xPos)
+        let yEval = (mouse.y <= (piece.yPos + pieceHeight) && mouse.y >= piece.yPos)
+        if(xEval && yEval){
+          currentDropPiece = piece;
+          ctx.save();
+          ctx.globalAlpha = 0.4;
+          ctx.fillStyle = 'white';
+          ctx.fillRect(currentDropPiece.xPos, currentDropPiece.yPos, pieceWidth, pieceHeight);
+          ctx.restore();
         }
         ctx.save()
         ctx.globalAlpha = 0.6;
@@ -168,6 +170,44 @@ export default {
         ctx.strokeRect(mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
       }
     }
+
+    function pieceDropped(event){
+      document.onmousemove = null;
+      document.onmousedown = onPuzzleClick;
+      if(currentDropPiece != null){
+        let temp = {xPos: currentPiece.xPos, yPos: currentPiece.yPos}
+        currentPiece.xPos = currentDropPiece.xPos;
+        currentPiece.yPos = currentDropPiece.yPos;
+        currentDropPiece.xPos = temp.xPos;
+        currentDropPiece.yPos = temp.yPos;
+      }
+      resetPuzzleAndCheckWin();
+    }
+
+    function resetPuzzleAndCheckWin(){
+      ctx.clearRect(0,0, puzzleWidth, puzzleHeight);
+      let gameWin = true;
+      let i;
+      let piece;
+      for(i = 0; i < pieces.length; i++){
+        let piece = pieces[i];
+        ctx.drawImage(image, piece.sx, piece.sy, pieceWidth, pieceHeight, piece.xPos, piece.yPos, pieceWidth, pieceHeight);
+        ctx.strokeRect(piece.xPos, piece.yPos, pieceWidth, pieceHeight);
+        if(piece.xPos !== piece.sx || piece.yPos !== piece.sy){
+          gameWin = false;
+        }
+      }
+      if(gameWin){
+        setTimeout(gameOver, 500);
+      }
+    }
+
+    function gameOver(){
+      document.onmousedown = null;
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
+
   },
   methods: {
     loadPuzzle(){
