@@ -1,15 +1,15 @@
 <template lang="html">
   <div v-if="animalObjects" class="row">
     <div class="column">
-      <img v-bind:src="imageOne">
-      <img v-bind:src="imageTwo">
+      <img v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
+      <img v-bind:src="imageTwo" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
     </div>
     <div class="column">
-      <img v-bind:src="imageThree">
-      <img v-bind:src="imageFour">
+      <img v-bind:src="imageThree" v-bind:name="this.animalObjects[2].name" v-on:click="handleClickThree">
+      <img v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
     </div>
     <div class="column">
-      <p>Where is the {{this.answer}}?</p>
+      <p>Where is the {{this.solution}}?</p>
     </div>
   </div>
 </template>
@@ -24,14 +24,12 @@ export default {
       // result of mounted fetch
       animalObjects: null,
       // the players answer
-      answer: null,
-
-      // the expected answer
-      solution: null
+      playerAnswer: "",
     }
   },
   mounted(){
     this.fetchGameData();
+
   },
   methods: {
     fetchGameData(){
@@ -54,10 +52,27 @@ export default {
         array[randomIndex] = temporaryValue;
       }
       return array;
-    }
+    },
+
+    /////Game logic ////
+
+    handleClickOne(){
+      this.playerAnswer = this.animalObjects[0].name;
+    },
+    handleClickTwo(){
+      this.playerAnswer = this.animalObjects[1].name;
+    },
+    handleClickThree(){
+      this.playerAnswer = this.animalObjects[2].name;
+    },
+    handleClickFour(){
+      this.playerAnswer = this.animalObjects[3].name;
+    },
+
+    ////////////////////
   },
   computed: {
-
+    ///Display images (options)
     imageOne(){
       return require("@/assets/animals/" + this.animalObjects[0].name.toLowerCase() + ".jpg")
     },
@@ -69,6 +84,11 @@ export default {
     },
     imageFour(){
       return require("@/assets/animals/" + this.animalObjects[3].name.toLowerCase() + ".jpg")
+    },
+    ///Generate the answer to the game
+    solution: function(){
+      let answerIndex = Math.floor(Math.random() * this.animalObjects.length);
+      return this.animalObjects[answerIndex].name;
     }
   }
 }
