@@ -10,14 +10,16 @@
           :gameWinStatus="gameWinStatus"
           :activeProfile="activeProfile"
           :planets="planets"
-          :skyScreenStatus="skyScreenStatus" />
+          :skyScreenStatus="skyScreenStatus"
+          :activeGame="activeGame" />
         <instruction-container
           v-if="!profileView"
           :homeScreenViewInstructions="homeScreenViewInstructions"
           :activeProfile="activeProfile"
           :skyScreenStatus="skyScreenStatus"
           :selectedPlanet="selectedPlanet"
-          :planetView="planetView" />
+          :planetView="planetView"
+          :activeGame="activeGame" />
       </div>
   </div>
 </template>
@@ -49,7 +51,8 @@ export default {
       gameWinStatus: false,
       skyScreenStatus: false,
       selectedPlanet: null,
-      planetView: false
+      planetView: false,
+      activeGame: null
     }
   },
   mounted(){
@@ -77,10 +80,15 @@ export default {
       this.skyScreenStatus = false;
       this.gameWinStatus = false;
       this.planetView = false;
+      this.activeGame = null;
     })
 
     eventBus.$on('planet-selected', (planet) => {
       this.homeScreenViewInstructions = false;
+      this.planets.forEach((planet) => {
+        planet.isSelected = false;
+      })
+      planet.isSelected = true;
       this.selectedPlanet = planet;
       this.planetView = true;
     })
@@ -97,8 +105,16 @@ export default {
       this.activeProfile = profile;
     })
 
-    eventBus.$on('landmark-puzzle-game-won', () => {
+    eventBus.$on('game-won', () => {
       this.gameWinStatus = true;
+      this.activeProfile.starPoints += 1;
+    })
+
+    eventBus.$on('game-selected', (game) => {
+      this.activeGame = game;
+      this.planetView = false;
+      this.homeScreenViewGame = false;
+      this.homeScreenViewInstructions = false;
     })
 
   },
@@ -119,6 +135,7 @@ export default {
       this.profileView = true;
       this.activeProfile = null;
       this.planetView = false;
+      this.activeGame = null;
     }
   }
 }

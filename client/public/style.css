@@ -38,7 +38,7 @@ button {
   color: white;
   border: 1px solid #003399;
   border-radius: 15px;
-  min-width: 40px;
+  min-width: 100px;
   height: 40px;
   padding: 0 10px 0 10px;
   margin: 0px 5px 0px 5px
@@ -67,14 +67,15 @@ body {
 .play-game-button {
   background-color: orangered;
   border: 1px solid orangered;
-  width: 150px;
+  width: 80px;
+  height: 30px;
+  font-size: 20px;
 }
 
   .play-game-button:hover {
   color: orangered;
   background-color: white;
 }
-
 
 .start-game-button {
   font-family: 'Boogaloo', cursive;

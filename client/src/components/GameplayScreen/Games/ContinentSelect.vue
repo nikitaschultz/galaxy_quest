@@ -53,6 +53,11 @@ export default {
   },
   mounted(){
     this.getCorrectAnswer()
+
+    eventBus.$on('reset-continent-select', () => {
+      this.loading = true;
+      this.getCorrectAnswer()
+    })
   },
   methods: {
     getCorrectAnswer(){
@@ -65,9 +70,9 @@ export default {
     },
     checkAnswer(){
       if(this.selectedAnswer === this.correctAnswer){
-        eventBus.$emit('continent-select-game-won')
+        eventBus.$emit('game-won')
       }else{
-        eventBus.$emit('continent-select-game-lost')
+        eventBus.$emit('game-lost')
       }
     }
   }

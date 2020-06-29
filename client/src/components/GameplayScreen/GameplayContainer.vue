@@ -1,6 +1,10 @@
 <template lang="html">
   <div class="gameplay-container">
     <div v-if="!gameWinStatus">
+      <div class="games" v-if="activeGame">
+        <continent-select v-if="activeGame.type === 'ContinentSelect'" />
+        <picture-puzzle v-if="activeGame.type === 'PicturePuzzle'" />
+      </div>
       <sky-screen v-if="skyScreenStatus" :activeProfile="activeProfile" />
       <home :planets="planets" v-if="homeScreenViewGame" />
     </div>
@@ -14,17 +18,17 @@
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
-import LandmarkPuzzle from './Games/LandmarkPuzzle.vue';
+import PicturePuzzle from './Games/PicturePuzzle.vue';
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';
 
 export default {
   name: "gameplay-container",
-  props: ["planets", "homeScreenViewGame", "gameWinStatus", "skyScreenStatus", "activeProfile"],
+  props: ["planets", "homeScreenViewGame", "gameWinStatus", "skyScreenStatus", "activeProfile", "activeGame"],
   components: {
     "home": Home,
     "continent-select": ContinentSelect,
-    "landmark-puzzle": LandmarkPuzzle,
+    "picture-puzzle": PicturePuzzle,
     "win-screen": WinScreen,
     "sky-screen": SkyScreen
   },

@@ -3,9 +3,9 @@
     <h2>{{ selectedPlanet.title }}</h2>
     <hr />
     <div v-for="game in selectedPlanet.games">
-      <h3>{{ game.name }}</h3>
+      <h3>{{ game.name }}</h3><br>
       <p>{{ game.description }}</p><br>
-      <button name="play-game" class="play-game-button">Play</button>
+      <button name="play-game" class="play-game-button" v-on:click="handlePlayGame(game)">Play</button>
       <hr />
     </div><br>
     <button type="button" name="button" v-on:click="handleHomeButtonClick">Home</button>
@@ -21,6 +21,9 @@ export default {
   methods: {
     handleHomeButtonClick(){
       eventBus.$emit('home-view');
+    },
+    handlePlayGame(game){
+      eventBus.$emit('game-selected', game)
     }
   }
 }

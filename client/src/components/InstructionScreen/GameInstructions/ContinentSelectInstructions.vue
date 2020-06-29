@@ -32,8 +32,10 @@
         <p>It fell in {{ correctAnswer }} which is the {{ colourCodes[correctAnswer] }} continent on the map.</p>
         <p>We'll find it next time!</p>
         <p>Would you like to play again?</p>
+        <button name="reset-game" v-on:click="playAgain">Play Again</button>
       </div>
     </div>
+    <button type="button" name="button" v-on:click="handleHomeButtonClick">Home</button>
   </div>
 </template>
 
@@ -65,12 +67,12 @@ export default {
       this.ready = true;
     })
 
-    eventBus.$on('continent-select-game-won', () => {
+    eventBus.$on('game-won', () => {
       this.resultPending = false;
       this.gameWon = true;
     })
 
-    eventBus.$on('continent-select-game-lost', () => {
+    eventBus.$on('game-lost', () => {
       this.attempts += 1;
       if(this.attempts > 2){
         this.attemptsExhausted = true;
@@ -82,6 +84,15 @@ export default {
     resetGame(){
       this.gameWon = false;
       this.resultPending = true;
+    },
+    handleHomeButtonClick(){
+      eventBus.$emit('home-view');
+    },
+    playAgain(){
+      this.resetGame();
+      this.attempts = 0;
+      this.ready = false;
+      eventBus.$emit('reset-continent-select')
     }
   }
 }

@@ -1,6 +1,10 @@
 <template lang="html">
   <div class="instruction-container">
     <home v-if="homeScreenViewInstructions" :activeProfile="activeProfile" />
+    <div class="game-instructions" v-if="activeGame">
+      <continent-select-instructions v-if="activeGame.type === 'ContinentSelect'" />
+      <picture-puzzle-instructions v-if="activeGame.type === 'PicturePuzzle'" />
+    </div>
     <sky-screen-instructions v-if="skyScreenStatus" :activeProfile="activeProfile" />
     <planet-instructions v-if="planetView" :selectedPlanet="selectedPlanet" />
   </div>
@@ -8,7 +12,7 @@
 
 <script>
 import ContinentSelectInstructions from './GameInstructions/ContinentSelectInstructions.vue';
-import LandmarkPuzzleInstructions from './GameInstructions/LandmarkPuzzleInstructions.vue';
+import PicturePuzzleInstructions from './GameInstructions/PicturePuzzleInstructions.vue';
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
 import Home from './Home.vue';
@@ -16,11 +20,11 @@ import { eventBus } from '../../main.js';
 
 export default {
   name: "instruction-container",
-  props: ["homeScreenViewInstructions", "activeProfile", "activeGame", "skyScreenStatus", "selectedPlanet", "planetView"],
+  props: ["homeScreenViewInstructions", "activeProfile", "activeGame", "skyScreenStatus", "selectedPlanet", "planetView", "activeGame"],
   components: {
     "home": Home,
     "continent-select-instructions": ContinentSelectInstructions,
-    "landmark-puzzle-instructions": LandmarkPuzzleInstructions,
+    "picture-puzzle-instructions": PicturePuzzleInstructions,
     "sky-screen-instructions": SkyScreenInstructions,
     "planet-instructions": PlanetInstructions
   }

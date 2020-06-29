@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="planet">
+  <div v-bind:class="isSelected">
     <img :src="planetSRC" :alt="planet.name" width="100px" v-on:click="handleSelectPlanet" :class="planet.name">
   </div>
 </template>
@@ -13,6 +13,9 @@ export default {
   computed: {
     planetSRC(){
       return require("@/assets/" + this.planet.name + ".png")
+    },
+    isSelected(){
+      return this.planet.isSelected ? "selected-planet" : "planet"
     }
   },
   methods: {
@@ -38,6 +41,10 @@ export default {
   }
 
   .planet:hover {
+    filter: drop-shadow(0 0 10px gold);
+  }
+
+  .selected-planet {
     filter: drop-shadow(0 0 10px gold);
   }
 

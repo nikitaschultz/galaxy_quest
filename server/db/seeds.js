@@ -49,7 +49,7 @@ db.planets.insertMany([
   }
 ])
 
-db.landmarkpuzzle.insertMany([
+db.landmarks.insertMany([
   {
     name: "Eiffel Tower",
     location: "Paris, France",
