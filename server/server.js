@@ -17,9 +17,12 @@ MongoClient.connect('mongodb://localhost:27017')
     const planetsCollection = db.collection('planets');
     const planetsRouter = createRouter(planetsCollection);
     app.use('/api/planets', planetsRouter)
-    const landmarkPuzzleCollection = db.collection('landmarkpuzzle');
-    const landmarkPuzzleRouter = createRouter(landmarkPuzzleCollection);
-    app.use('/api/games/landmarkpuzzle', landmarkPuzzleRouter)
+    const landmarksCollection = db.collection('landmarkpuzzle');
+    const landmarksRouter = createRouter(landmarksCollection);
+    app.use('/api/landmarks', landmarksRouter)
+    const animalsCollection = db.collection('animals');
+    const animalsRouter = createRouter(animalsCollection);
+    app.use('/api/animals', animalsRouter)
   })
   .catch(console.err);
 

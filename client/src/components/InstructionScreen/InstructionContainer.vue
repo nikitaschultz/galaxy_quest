@@ -16,7 +16,8 @@ export default {
   props: ["homeScreenViewInstructions", "activeProfile", "activeGame"],
   data(){
     return {
-      selectedPlanet: null
+      selectedPlanet: null,
+      tester: "<p> Test </p>"
     }
   },
   components: {
