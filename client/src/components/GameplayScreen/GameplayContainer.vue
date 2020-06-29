@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="gameplay-container">
     <div v-if="!gameWinStatus">
-      <sky-screen v-if="starScreenStatus" :activeProfile="activeProfile" />
+      <sky-screen v-if="skyScreenStatus" :activeProfile="activeProfile" />
       <home :planets="planets" v-if="homeScreenViewGame" />
     </div>
     <div v-if="gameWinStatus">
@@ -20,7 +20,7 @@ import SkyScreen from './SkyScreen.vue';
 
 export default {
   name: "gameplay-container",
-  props: ["planets", "homeScreenViewGame", "gameWinStatus", "starScreenStatus", "activeProfile"],
+  props: ["planets", "homeScreenViewGame", "gameWinStatus", "skyScreenStatus", "activeProfile"],
   components: {
     "home": Home,
     "continent-select": ContinentSelect,

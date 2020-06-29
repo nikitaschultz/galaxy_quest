@@ -9,11 +9,12 @@
           :activeProfile="activeProfile"
           :planets="planets"
           v-if="!profileView"
-          :starScreenStatus="starScreenStatus" />
+          :skyScreenStatus="skyScreenStatus" />
         <instruction-container
           :homeScreenViewInstructions="homeScreenViewInstructions"
           :activeProfile="activeProfile"
-          v-if="!profileView" />
+          v-if="!profileView"
+          :skyScreenStatus="skyScreenStatus" />
       </div>
   </div>
 </template>
@@ -43,7 +44,7 @@ export default {
       homeScreenViewInstructions: false,
       planets: [],
       gameWinStatus: false,
-      starScreenStatus: false
+      skyScreenStatus: false
     }
   },
   mounted(){
@@ -65,6 +66,13 @@ export default {
       this.homeScreenViewInstructions = true;
     })
 
+    eventBus.$on('home-view', () => {
+      this.homeScreenViewGame = true;
+      this.homeScreenViewInstructions = true;
+      this.skyScreenStatus = false;
+      this.gameWinStatus = false;
+    })
+
     eventBus.$on('planet-selected', (planet) => {
       this.homeScreenViewInstructions = false;
     })
@@ -72,11 +80,12 @@ export default {
     eventBus.$on('show-star-screen', () => {
       this.homeScreenViewGame = false;
       this.homeScreenViewInstructions = false;
-      this.starScreenStatus = true;
+      this.skyScreenStatus = true;
     })
 
-    eventBus.$on('profile-updated', () => {
-      this.fetchProfiles()
+    eventBus.$on('profile-updated', (profile) => {
+      this.fetchProfiles();
+      this.activeProfile = profile;
     })
 
     eventBus.$on('landmark-puzzle-game-won', () => {

@@ -103,7 +103,7 @@ export default {
       }
 
       ProfileService.updateProfile(profileId, updatedData)
-      .then((res) => eventBus.$emit('profile-updated', res))
+      .then((profile) => eventBus.$emit('profile-updated', profile))
 
     }
   }
