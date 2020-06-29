@@ -1,7 +1,6 @@
 <template lang="html">
   <div class="instruction-container">
     <home v-if="homeScreenViewInstructions" :activeProfile="activeProfile" />
-    <continent-select-instructions />
   </div>
 </template>
 

@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000/api/games/landmarkpuzzle';
+const baseURL = 'http://localhost:3000/api/landmarks';
 
 export default {
   getLandmarks(){
