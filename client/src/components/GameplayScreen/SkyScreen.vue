@@ -5,20 +5,12 @@
 </template>
 
 <script>
+import ProfileService from '@/services/ProfileService.js';
+import { eventBus } from '@/main.js';
 
 export default {
   name: "sky-screen",
-  data(){
-    return {
-      starCoordinates: [{
-        relX: 0.6,
-        relY: 0.3
-      },{
-        relX: 0.3,
-        relY: 0.8
-      }]
-    }
-  },
+  props: ["activeProfile"],
   mounted(){
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -30,7 +22,9 @@ export default {
     let skyWidth = canvas.width
     let skyHeight = canvas.height
 
-    let starCoordinates = this.starCoordinates;
+    let starCoordinates = this.activeProfile.starCoordinates;
+    let starPoints = this.activeProfile.starPoints;
+    let profileId = this.activeProfile._id;
 
     function getStarCoordinates(stars){
       stars.forEach((star) => {
@@ -56,7 +50,12 @@ export default {
       let yEval = yPos > 0 && yPos < canvas.height
 
       if(xEval && yEval){
-        document.onmousedown = placeStar;
+        if(starPoints > 0){
+          document.onmousedown = placeStar;
+        } else {
+          document.onmousedown = null;
+          document.onmousemove = null;
+        }
       } else {
         document.onmousedown = null;
       }
@@ -83,6 +82,8 @@ export default {
     document.onmousemove = updateScreen;
 
     function placeStar(){
+      starPoints = starPoints - 1;
+
       let cRect = canvas.getBoundingClientRect();
       let xPos = Math.round(event.clientX - cRect.left);
       let yPos = Math.round(event.clientY - cRect.top);
@@ -95,8 +96,16 @@ export default {
       starCoordinates.push(star);
 
       drawStar(xPos, yPos);
-    }
 
+      let updatedData = {
+        starPoints: starPoints,
+        starCoordinates: starCoordinates
+      }
+
+      ProfileService.updateProfile(profileId, updatedData)
+      .then((res) => eventBus.$emit('profile-updated', res))
+
+    }
   }
 }
 </script>

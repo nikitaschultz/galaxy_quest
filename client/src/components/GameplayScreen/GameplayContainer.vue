@@ -1,8 +1,7 @@
 <template lang="html">
   <div class="gameplay-container">
     <div v-if="!gameWinStatus">
-      <!-- <landmark-puzzle /> -->
-      <sky-screen />
+      <sky-screen v-if="starScreenStatus" :activeProfile="activeProfile" />
       <home :planets="planets" v-if="homeScreenViewGame" />
     </div>
     <div v-if="gameWinStatus">
@@ -21,7 +20,7 @@ import SkyScreen from './SkyScreen.vue';
 
 export default {
   name: "gameplay-container",
-  props: ["planets", "homeScreenViewGame", "gameWinStatus"],
+  props: ["planets", "homeScreenViewGame", "gameWinStatus", "starScreenStatus", "activeProfile"],
   components: {
     "home": Home,
     "continent-select": ContinentSelect,

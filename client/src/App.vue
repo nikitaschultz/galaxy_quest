@@ -3,8 +3,17 @@
     <h1>Galaxy Quest</h1>
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
-        <gameplay-container :homeScreenViewGame="homeScreenViewGame" :gameWinStatus="gameWinStatus" :activeProfile="activeProfile" :planets="planets" v-if="!profileView" />
-        <instruction-container :homeScreenViewInstructions="homeScreenViewInstructions" :activeProfile="activeProfile" v-if="!profileView" />
+        <gameplay-container
+          :homeScreenViewGame="homeScreenViewGame"
+          :gameWinStatus="gameWinStatus"
+          :activeProfile="activeProfile"
+          :planets="planets"
+          v-if="!profileView"
+          :starScreenStatus="starScreenStatus" />
+        <instruction-container
+          :homeScreenViewInstructions="homeScreenViewInstructions"
+          :activeProfile="activeProfile"
+          v-if="!profileView" />
       </div>
   </div>
 </template>
@@ -33,7 +42,8 @@ export default {
       homeScreenViewGame: false,
       homeScreenViewInstructions: false,
       planets: [],
-      gameWinStatus: false
+      gameWinStatus: false,
+      starScreenStatus: false
     }
   },
   mounted(){
@@ -59,9 +69,20 @@ export default {
       this.homeScreenViewInstructions = false;
     })
 
+    eventBus.$on('show-star-screen', () => {
+      this.homeScreenViewGame = false;
+      this.homeScreenViewInstructions = false;
+      this.starScreenStatus = true;
+    })
+
+    eventBus.$on('profile-updated', () => {
+      this.fetchProfiles()
+    })
+
     eventBus.$on('landmark-puzzle-game-won', () => {
       this.gameWinStatus = true;
     })
+
   },
   methods: {
     fetchProfiles(){
