@@ -29,13 +29,13 @@ db.planets.insertMany([
     title: "Geography Planet",
     games: [
       {
-        name: "Continents of the World!",
+        name: "Continents of the World",
         description: "A star has fallen to one of Earth's continents!  Help them find it by selecting the right continent on a map!",
         type: "ContinentSelect",
         dataSet: null
       },
       {
-        name: "World Landmarks!",
+        name: "World Landmarks",
         description: "Take a trip around planet Earth's most amazing landmarks!  Put a landmark's picture back together",
         type: "PicturePuzzle",
         dataSet: "landmarks"

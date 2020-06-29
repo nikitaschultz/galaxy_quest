@@ -64,6 +64,18 @@ body {
   padding: 0 10px;
 }
 
+.play-game-button {
+  background-color: orangered;
+  border: 1px solid orangered;
+  width: 150px;
+}
+
+  .play-game-button:hover {
+  color: orangered;
+  background-color: white;
+}
+
+
 .start-game-button {
   font-family: 'Boogaloo', cursive;
   font-weight: bold;
