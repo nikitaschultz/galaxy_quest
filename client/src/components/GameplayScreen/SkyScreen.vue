@@ -10,7 +10,13 @@ export default {
   name: "sky-screen",
   data(){
     return {
-      starCoordinates: []
+      starCoordinates: [{
+        relX: 0.6,
+        relY: 0.3
+      },{
+        relX: 0.3,
+        relY: 0.8
+      }]
     }
   },
   mounted(){
@@ -21,19 +27,26 @@ export default {
     canvas.width = skyScreen.clientWidth;
     canvas.height = skyScreen.clientHeight;
 
-    let starCoordinates = [];
+    let skyWidth = canvas.width
+    let skyHeight = canvas.height
 
-    function getStarCoordinates(){
-      if(starCoordinates.length > 0){
-        for(let star in starCoordinates){
-          drawStar(star.relX * canvas.width, star.relY * canvas.height)
-        }
-      }
+    let starCoordinates = this.starCoordinates;
+
+    function getStarCoordinates(stars){
+      stars.forEach((star) => {
+        let xPos = Math.round(star.relX * skyWidth);
+        let yPos = Math.round(star.relY * skyHeight);
+
+        drawStar(xPos, yPos);
+      })
     }
 
     function updateScreen(event){
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      getStarCoordinates;
+
+      if(starCoordinates.length > 0){
+        getStarCoordinates(starCoordinates);
+      }
 
       let cRect = canvas.getBoundingClientRect();
       let xPos = Math.round(event.clientX - cRect.left);
@@ -41,8 +54,6 @@ export default {
 
       let xEval = xPos > 0 && xPos < canvas.width
       let yEval = yPos > 0 && yPos < canvas.height
-
-      console.log(starCoordinates);
 
       if(xEval && yEval){
         document.onmousedown = placeStar;
@@ -77,8 +88,8 @@ export default {
       let yPos = Math.round(event.clientY - cRect.top);
 
       let star = {
-        relX: xPos / canvas.width,
-        relY: yPos / canvas.height
+        relX: xPos / skyWidth,
+        relY: yPos / skyHeight
       };
 
       starCoordinates.push(star);
