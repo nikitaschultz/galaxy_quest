@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="gameplay-container">
     <div v-if="!gameWinStatus">
-      <landmark-puzzle />
+      <continent-select />
       <home :planets="planets" v-if="homeScreenViewGame" />
     </div>
     <div v-if="gameWinStatus">

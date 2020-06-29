@@ -95,7 +95,7 @@ export default {
 
   #win-container {
     width: 100%;
-    height: 100%;
+    height: 75vh;
     background-color: black;
   }
 

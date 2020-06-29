@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="instruction-container">
     <home v-if="homeScreenViewInstructions" :activeProfile="activeProfile" />
-    <landmark-puzzle-instructions />
+    <continent-select-instructions />
   </div>
 </template>
 

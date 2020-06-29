@@ -241,7 +241,7 @@ export default {
 
   .game-container {
     background-color: white;
-    height: 100%;
+    height: 75vh;
     width: 100%;
     display: flex;
     flex-direction: column;
