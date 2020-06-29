@@ -123,11 +123,13 @@ export default {
       }
 
       function onPuzzleClick(event){
-        let xEval = event.layerX >= 0 && event.layerX <= puzzleWidth;
-        let yEval = event.layerY >= 0 && event.layerY <= puzzleHeight;
+        let cRect = canvas.getBoundingClientRect();
+
+        let xEval = (event.clientX - cRect.left) > 0 && (event.clientX - cRect.left) < canvas.width;
+        let yEval = (event.clientY - cRect.top) > 0 && (event.clientY - cRect.top) < canvas.height;
         if(xEval && yEval){
-          mouse.x = event.layerX;
-          mouse.y = event.layerY;
+          mouse.x = Math.round(event.clientX - cRect.left);
+          mouse.y = Math.round(event.clientY - cRect.top);
           currentPiece = checkPieceClicked();
         }else{
           currentPiece = null;
