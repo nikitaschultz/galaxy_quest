@@ -35,7 +35,6 @@
         <button name="reset-game" v-on:click="playAgain">Play Again</button>
       </div>
     </div>
-    <button type="button" name="button" v-on:click="handleHomeButtonClick">Home</button>
   </div>
 </template>
 
@@ -84,9 +83,6 @@ export default {
     resetGame(){
       this.gameWon = false;
       this.resultPending = true;
-    },
-    handleHomeButtonClick(){
-      eventBus.$emit('home-view');
     },
     playAgain(){
       this.resetGame();

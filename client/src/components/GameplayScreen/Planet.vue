@@ -1,6 +1,6 @@
 <template lang="html">
   <div v-bind:class="isSelected">
-    <img :src="planetSRC" :alt="planet.name" width="100px" v-on:click="handleSelectPlanet" :class="planet.name">
+    <img :src="planetSRC" :alt="planet.name" width="80px" v-on:click="handleSelectPlanet" :class="planet.name">
   </div>
 </template>
 
@@ -29,15 +29,15 @@ export default {
 <style lang="css" scoped>
 
   .geography {
-    margin: 10vh 5vw;
+    margin: 10vh 6.5vw;
   }
 
   .animals {
-    margin: 50vh 5vw;
+    margin: 50vh 6.5vw;
   }
 
   .numbers {
-    margin: 30vh 5vw;
+    margin: 30vh 6.5vw;
   }
 
   .planet:hover {

@@ -7,8 +7,7 @@
       <p>{{ game.description }}</p><br>
       <button name="play-game" class="play-game-button" v-on:click="handlePlayGame(game)">Play</button>
       <hr />
-    </div><br>
-    <button type="button" name="button" v-on:click="handleHomeButtonClick">Home</button>
+    </div>
   </div>
 </template>
 
@@ -19,9 +18,6 @@ export default {
   name: "planet-instructions",
   props: ["selectedPlanet"],
   methods: {
-    handleHomeButtonClick(){
-      eventBus.$emit('home-view');
-    },
     handlePlayGame(game){
       eventBus.$emit('game-selected', game)
     }

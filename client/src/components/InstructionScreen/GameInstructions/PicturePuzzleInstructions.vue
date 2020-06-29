@@ -25,7 +25,6 @@
         <p>Please take it as a token of our grattitude!</p>
       </div>
     </div>
-    <button type="button" name="button" v-on:click="handleHomeButtonClick">Home</button>
   </div>
 </template>
 
@@ -63,11 +62,6 @@ export default {
       this.resultPending = false;
       this.gameWon = true;
     })
-  },
-  methods: {
-    handleHomeButtonClick(){
-      eventBus.$emit('home-view');
-    }
   }
 }
 </script>

@@ -114,7 +114,7 @@ export default {
   #sky-container {
     width: 100%;
     height: 75vh;
-    background-image: radial-gradient(indigo, midnightblue, black, black);
+    background-image: radial-gradient(#340f4d, #060d4d, black, black);
   }
 
 </style>
