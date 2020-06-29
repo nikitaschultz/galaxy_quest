@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="game-container">
-    <button v-if="loading" v-on:click="loadPuzzle" type="button" name="button">Let's Go!</button>
+    <button v-if="loading" v-on:click="loadPuzzle" name="start-game" class="start-game-button">Let's Go!</button>
     <canvas id="canvas" width="600" height="400" :class="hiddenClass"></canvas>
   </div>
 </template>

@@ -63,3 +63,22 @@ body {
   color: #003399;
   padding: 0 10px;
 }
+
+.start-game-button {
+  font-family: 'Boogaloo', cursive;
+  font-weight: bold;
+  font-size: 40px;
+  background-color: #003399;
+  color: white;
+  border: 1px solid #003399;
+  border-radius: 15px;
+  min-width: 200px;
+  height: 100px;
+  padding: 0 10px 0 10px;
+  margin: 0px 5px 0px 5px
+}
+
+  .start-game-button:hover {
+  color: #003399;
+  background-color: white;
+}

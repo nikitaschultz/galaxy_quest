@@ -21,14 +21,30 @@ db.profiles.insertMany([
 db.planets.insertMany([
   {
     name: "numbers",
+    title: "Numbers Planet",
     games: []
   },
   {
     name: "geography",
-    games: []
+    title: "Geography Planet",
+    games: [
+      {
+        name: "Continents of the World!",
+        description: "A star has fallen to one of Earth's continents!  Help them find it by selecting the right continent on a map!",
+        type: "ContinentSelect",
+        dataSet: null
+      },
+      {
+        name: "World Landmarks!",
+        description: "Take a trip around planet Earth's most amazing landmarks!  Put a landmark's picture back together",
+        type: "PicturePuzzle",
+        dataSet: "landmarks"
+      }
+    ]
   },
   {
     name: "animals",
+    title: "Animals Planet",
     games: []
   }
 ])

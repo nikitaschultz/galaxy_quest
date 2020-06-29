@@ -1,20 +1,23 @@
 <template lang="html">
   <div class="app-container">
     <h1>Galaxy Quest</h1>
+    <button v-if="!profileView" name="change-profile" class="change-profile-button" v-on:click="changeProfile" >Change Profile</button>
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
         <gameplay-container
+          v-if="!profileView"
           :homeScreenViewGame="homeScreenViewGame"
           :gameWinStatus="gameWinStatus"
           :activeProfile="activeProfile"
           :planets="planets"
-          v-if="!profileView"
           :skyScreenStatus="skyScreenStatus" />
         <instruction-container
+          v-if="!profileView"
           :homeScreenViewInstructions="homeScreenViewInstructions"
           :activeProfile="activeProfile"
-          v-if="!profileView"
-          :skyScreenStatus="skyScreenStatus" />
+          :skyScreenStatus="skyScreenStatus"
+          :selectedPlanet="selectedPlanet"
+          :planetView="planetView" />
       </div>
   </div>
 </template>
@@ -44,7 +47,9 @@ export default {
       homeScreenViewInstructions: false,
       planets: [],
       gameWinStatus: false,
-      skyScreenStatus: false
+      skyScreenStatus: false,
+      selectedPlanet: null,
+      planetView: false
     }
   },
   mounted(){
@@ -71,16 +76,20 @@ export default {
       this.homeScreenViewInstructions = true;
       this.skyScreenStatus = false;
       this.gameWinStatus = false;
+      this.planetView = false;
     })
 
     eventBus.$on('planet-selected', (planet) => {
       this.homeScreenViewInstructions = false;
+      this.selectedPlanet = planet;
+      this.planetView = true;
     })
 
     eventBus.$on('show-star-screen', () => {
       this.homeScreenViewGame = false;
       this.homeScreenViewInstructions = false;
       this.skyScreenStatus = true;
+      this.planetView = false;
     })
 
     eventBus.$on('profile-updated', (profile) => {
@@ -101,6 +110,15 @@ export default {
     fetchPlanets(){
       PlanetService.getPlanets()
       .then(planets => this.planets = planets)
+    },
+    changeProfile(){
+      this.gameWinStatus = false;
+      this.skyScreenStatus = false;
+      this.homeScreenViewGame = false;
+      this.homeScreenViewInstructions = false;
+      this.profileView = true;
+      this.activeProfile = null;
+      this.planetView = false;
     }
   }
 }
@@ -118,6 +136,12 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+  }
+
+  .change-profile-button {
+    top: 2vh;
+    right: 2vw;
+    position: fixed;
   }
 
 

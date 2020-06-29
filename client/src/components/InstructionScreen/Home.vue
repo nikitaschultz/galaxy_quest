@@ -13,6 +13,7 @@
       <div v-if="!activeProfile.starPoints">
         <p>You don't have any stars to add to your sky.</p>
         <p>Play a game to earn some more!</p>
+        <button v-on:click="showSkyScreen" type="button" name="button">See Stars</button>
       </div>
 
     </div>

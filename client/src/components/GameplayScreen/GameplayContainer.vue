@@ -1,13 +1,11 @@
 <template lang="html">
   <div class="gameplay-container">
-    <div class="stars">  
-      <div v-if="!gameWinStatus">
-        <sky-screen v-if="skyScreenStatus" :activeProfile="activeProfile" />
-        <home :planets="planets" v-if="homeScreenViewGame" />
-      </div>
-      <div v-if="gameWinStatus">
-        <win-screen />
-      </div>
+    <div v-if="!gameWinStatus">
+      <sky-screen v-if="skyScreenStatus" :activeProfile="activeProfile" />
+      <home :planets="planets" v-if="homeScreenViewGame" />
+    </div>
+    <div v-if="gameWinStatus">
+      <win-screen />
     </div>
   </div>
 </template>

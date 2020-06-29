@@ -52,6 +52,7 @@ export default {
       if(xEval && yEval){
         if(starPoints > 0){
           document.onmousedown = placeStar;
+          drawStar(xPos, yPos);
         } else {
           document.onmousedown = null;
           document.onmousemove = null;
@@ -59,8 +60,6 @@ export default {
       } else {
         document.onmousedown = null;
       }
-
-      drawStar(xPos, yPos);
     }
 
     function drawStar(xStart, yStart){
