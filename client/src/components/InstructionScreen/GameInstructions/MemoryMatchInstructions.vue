@@ -3,8 +3,8 @@
     <h2>Animal Memory Match</h2>
     <div v-if="resultPending">
       <div v-if="!ready">
-        <p>The animals have lost their mate!</p>
-        <p>Will you help them find each other?</p>
+        <p>The animal pairs have lost each other!</p>
+        <p>Will you help bring them back together?</p>
       </div>
       <div v-if="ready">
         <p>Click a card to turn it over.</p>
@@ -29,16 +29,22 @@ export default {
   name: "memory-match-instructions",
   data(){
     return {
-      gameData: [],
       resultPending: true,
       ready: false,
-      gameWon: false
+      gameWon: false,
+      matchMade: false,
+      displayFact: ""
     }
   },
   mounted(){
     eventBus.$on('memory-match-game-loaded', (gameData) => {
       this.gameData = gameData
       this.ready = true;
+    })
+
+    eventBus.$on('memory-match-made', (card) => {
+      this.matchMade = true;
+      this.displayFact = card.facts[Math.floor(Math.random() * card.facts.length)]
     })
 
     eventBus.$on('game-won', () => {

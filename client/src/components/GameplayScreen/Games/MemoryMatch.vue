@@ -59,7 +59,7 @@ export default {
   methods: {
     loadInstructions(){
       this.loading = false;
-      eventBus.$emit('memory-match-game-loaded', this.data)
+      eventBus.$emit('memory-match-game-loaded')
     },
     processSelect(card){
       if(!this.selectedCard){
@@ -73,6 +73,7 @@ export default {
             card.inPlay = false;
             this.selectedCard = null;
             this.checkForWin();
+            eventBus.$emit('memory-match-made', card)
           }, 1000)
         }else{
           card.isSelected = true;
@@ -89,8 +90,6 @@ export default {
       let gameWin = this.gameCards.every((card) => {
         return card.inPlay === false
       })
-
-      console.log(gameWin);
 
       if(gameWin){
         eventBus.$emit('game-won')

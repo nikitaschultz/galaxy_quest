@@ -49,7 +49,13 @@ db.planets.insertMany([
   {
     name: "animals",
     title: "Animals Planet",
-    games: []
+    games: [
+      {
+      name: "Memory Match",
+      description: "Turn over pictures of animals to find their match.",
+      type: "MemoryMatch",
+      dataSet: "animals_match"
+    }]
   }
 ])
 
@@ -194,37 +200,65 @@ db.animalsmatch.insertMany([
   {
     name: "Monkey",
     image: "monkey",
-    facts: []
+    facts: [
+      "Some monkeys live on the ground, while others live in trees!",
+      "Groups of monkeys are known as a 'tribe', 'troop' or 'mission'!",
+      "Different monkey species eat a variety of foods, such as fruit, insects, flowers, leaves and reptiles."
+    ]
   },
   {
-    name: "Bunny",
-    image: "bunny",
-    facts: []
+    name: "Rabbit",
+    image: "rabbit",
+    facts: [
+      "A baby rabbit is called a kit, a female is called a doe and a male is called a buck!",
+      "A rabbit's teeth never stop growing!",
+      "Rabbits perform an athletic leap, known as a 'binky', when they're happy — performing twists and kicks in mid air!"
+    ]
   },
   {
     name: "Cow",
     image: "cow",
-    facts: []
+    facts: [
+      "Cows are sacred in India!",
+      "Cows are red/greed colorblind!",
+      "Cows have an excellent sense of smell and can detect odors up to six miles away!"
+    ]
   },
   {
     name: "Parrot",
     image: "parrot",
-    facts: []
+    facts: [
+      "Parrots are believed to be one of the most intelligent bird species!",
+      "Some species of parrot can imitate human voices!",
+      "Some parrot species can live for over 80 years!"
+    ]
   },
   {
     name: "Squirrel",
     image: "squirrel",
-    facts: []
+    facts: [
+      "Squirrels have four front teeth which never stop growing throughout their lives!",
+      "Squirrels can find food buried beneath a foot of snow!",
+      "Squirrels sometimes pretend to bury a nut to throw off potential thieves!"
+    ]
   },
   {
     name: "Tiger",
     image: "tiger",
-    facts: []
+    facts: [
+      "Tigers love to swim and play in water!",
+      "Tigers are the largest wild cats in the world!",
+      "No two tigers have the same stripes!"
+    ]
   },
   {
     name: "Kangaroo",
     image: "kangaroo",
-    facts: []
+    facts: [
+      "Kangaroos can't walk backwards!",
+      "Kangaroos can jump up to three times their own height!",
+      "There are more kangaroos in Australia than there are Australian people!"
+    ]
   }
 
 ])
