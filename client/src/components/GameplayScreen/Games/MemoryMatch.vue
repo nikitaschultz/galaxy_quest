@@ -40,6 +40,7 @@ export default {
         let card = {
           image: dataArray[i].image,
           name: dataArray[i].name,
+          facts: dataArray[i].facts,
           isSelected: false,
           inPlay: true
         };
@@ -47,6 +48,7 @@ export default {
         card = {
           image: dataArray[i].image,
           name: dataArray[i].name,
+          facts: dataArray[i].facts,
           isSelected: false,
           inPlay: true
         };

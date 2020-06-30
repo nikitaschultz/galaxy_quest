@@ -10,6 +10,10 @@
         <p>Click a card to turn it over.</p>
         <p>If you turn over two matching cards, they will disappear, otherwise, they will turn back over.</p>
         <p>Keep matching until you've removed all the cards!</p>
+        <div v-if="matchMade">
+          <h3>Fun Fact:</h3>
+          <p>{{ displayFact }}</p>
+        </div>
       </div>
     </div>
     <div v-if="!resultPending">
