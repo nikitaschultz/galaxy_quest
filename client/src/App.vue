@@ -23,6 +23,8 @@
           :planetView="planetView"
           :activeGame="activeGame" />
       </div>
+    <button class="attribution-button" v-on:click="toggleAttributionView">Attribution Credits</button>
+    <attribution v-if="attributionView" />
   </div>
 </template>
 
@@ -34,6 +36,7 @@ import ProfileContainer from './components/Profiles/ProfileContainer.vue';
 import GameplayContainer from './components/GameplayScreen/GameplayContainer.vue';
 import AdminView from './components/Profiles/AdminView.vue';
 import InstructionContainer from './components/InstructionScreen/InstructionContainer.vue';
+import Attribution from './components/Attribution.vue';
 import { eventBus } from './main.js';
 
 export default {
@@ -42,7 +45,8 @@ export default {
     "profile-container": ProfileContainer,
     "gameplay-container": GameplayContainer,
     "instruction-container": InstructionContainer,
-    "admin-view": AdminView
+    "admin-view": AdminView,
+    "attribution": Attribution
   },
   data(){
     return {
@@ -59,7 +63,8 @@ export default {
       planetView: false,
       activeGame: null,
       adminView: false,
-      admin: null
+      admin: null,
+      attributionView: false
     }
   },
   mounted(){
@@ -126,9 +131,6 @@ export default {
         this.activeProfile.starPoints += 1;
       }
 
-      console.log(this.activeGame._id);
-      console.log(this.activeProfile.completedGames);
-
       const updatedData = {
         starPoints: this.activeProfile.starPoints,
         completedGames: this.activeProfile.completedGames
@@ -160,6 +162,10 @@ export default {
       this.fetchAdmin();
     })
 
+    eventBus.$on('toggle-attribution-view', () => {
+      this.toggleAttributionView();
+    })
+
   },
   methods: {
     fetchProfiles(){
@@ -187,6 +193,9 @@ export default {
     adminScreen(){
       eventBus.$emit('admin-view');
       this.adminView = !this.adminView;
+    },
+    toggleAttributionView(){
+      this.attributionView = !this.attributionView;
     }
   }
 }
@@ -210,6 +219,18 @@ export default {
     top: 2vh;
     right: 2vw;
     position: fixed;
+  }
+
+  .attribution-button {
+    background-color: transparent;
+    color: grey;
+    border: none;
+    font-size: 15px;
+    height: 20px;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    font-weight: lighter;
   }
 
 
