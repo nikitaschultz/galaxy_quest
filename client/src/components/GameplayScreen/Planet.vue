@@ -1,6 +1,6 @@
 <template lang="html">
-  <div v-bind:class="isSelected">
-    <img :src="planetSRC" :alt="planet.name" width="80px" v-on:click="handleSelectPlanet" :class="planet.name">
+  <div v-bind:class="isSelected" v-on:click="handleSelectPlanet" >
+    <img :src="planetSRC" :alt="planet.name" width="80px" :class="planet.name">
   </div>
 </template>
 
