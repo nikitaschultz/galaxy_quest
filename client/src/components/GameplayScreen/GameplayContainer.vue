@@ -5,6 +5,7 @@
         <div class="games" v-if="activeGame">
           <continent-select v-if="activeGame.type === 'ContinentSelect'" />
           <picture-puzzle v-if="activeGame.type === 'PicturePuzzle'" />
+          <memory-match v-if="activeGame.type === 'MemoryMatch'" />
         </div>
         <sky-screen v-if="skyScreenStatus" :activeProfile="activeProfile" />
         <home :planets="planets" v-if="homeScreenViewGame" />
@@ -21,6 +22,7 @@ import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
 import PicturePuzzle from './Games/PicturePuzzle.vue';
+import MemoryMatch from './Games/MemoryMatch.vue';
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';
 
@@ -31,6 +33,7 @@ export default {
     "home": Home,
     "continent-select": ContinentSelect,
     "picture-puzzle": PicturePuzzle,
+    "memory-match": MemoryMatch,
     "win-screen": WinScreen,
     "sky-screen": SkyScreen
   },
