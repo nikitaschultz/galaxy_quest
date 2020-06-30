@@ -2,6 +2,8 @@
   <div class="app-container">
     <h1>Galaxy Quest</h1>
     <button v-if="!profileView" name="change-profile" class="change-profile-button" v-on:click="changeProfile" >Change Profile</button>
+    <button v-if="profileView" name="admin-screen" class="change-profile-button" v-on:click="adminScreen" >Admin</button>
+    <admin-view v-if="adminView" :profiles="profiles" />
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
         <gameplay-container
@@ -29,6 +31,7 @@ import PlanetService from './services/PlanetService.js';
 import ProfileService from './services/ProfileService.js';
 import ProfileContainer from './components/Profiles/ProfileContainer.vue';
 import GameplayContainer from './components/GameplayScreen/GameplayContainer.vue';
+import AdminView from './components/Profiles/AdminView.vue';
 import InstructionContainer from './components/InstructionScreen/InstructionContainer.vue';
 import { eventBus } from './main.js';
 
@@ -37,7 +40,8 @@ export default {
   components: {
     "profile-container": ProfileContainer,
     "gameplay-container": GameplayContainer,
-    "instruction-container": InstructionContainer
+    "instruction-container": InstructionContainer,
+    "admin-view": AdminView
   },
   data(){
     return {
@@ -52,7 +56,8 @@ export default {
       skyScreenStatus: false,
       selectedPlanet: null,
       planetView: false,
-      activeGame: null
+      activeGame: null,
+      adminView: false
     }
   },
   mounted(){
@@ -108,13 +113,30 @@ export default {
     eventBus.$on('game-won', () => {
       this.gameWinStatus = true;
       this.activeProfile.starPoints += 1;
-    })
+      if(!this.activeProfile.completedGames.includes(this.activeGame._id)){
+        this.activeProfile.completedGames.push(this.activeGame._id);
+      };
+      const updatedData = {
+        starPoints: this.activeProfile.starPoints,
+        completedGames: this.activeProfile.completedGames
+      }
+      ProfileService.updateProfile(this.activeProfile._id, updatedData)
+      .then(res => this.fetchProfiles())
+      })
 
     eventBus.$on('game-selected', (game) => {
       this.activeGame = game;
       this.planetView = false;
       this.homeScreenViewGame = false;
       this.homeScreenViewInstructions = false;
+    })
+
+    eventBus.$on('toggle-admin-view', () => {
+      this.adminView = !this.adminView;
+    })
+
+    eventBus.$on('profile-deleted', () => {
+      this.fetchProfiles();
     })
 
   },
@@ -136,6 +158,10 @@ export default {
       this.activeProfile = null;
       this.planetView = false;
       this.activeGame = null;
+    },
+    adminScreen(){
+      eventBus.$emit('admin-view');
+      this.adminView = !this.adminView;
     }
   }
 }

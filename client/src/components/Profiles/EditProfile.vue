@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="centered">
-    <h2>New Explorer</h2><br>
+    <h2>Edit Explorer</h2><br>
     <form class="new-profile">
       <div class="horizontal-flex">
         <label for="name">Name:</label>
@@ -11,7 +11,7 @@
       </div>
     </form>
     <div class="horizontal-flex">
-      <button v-on:click="handleCreateProfile" name="create-profile">Start Exploring</button>
+      <button v-on:click="handleUpdateProfile" name="create-profile">Update</button>
       <button v-on:click="handleBackButton" name="back-button">Back</button>
     </div>
   </div>
@@ -23,7 +23,11 @@ import { eventBus } from '../../main.js';
 
 
 export default {
-  name: "create-profile",
+  name: "edit-profile",
+  props: ["selectedProfile"],
+  mounted(){
+    this.updateDefaultData();
+  },
   data(){
     return {
       avatars: [
@@ -57,6 +61,7 @@ export default {
       profileName: ""
     }
   },
+  props: ["selectedProfile"],
   methods: {
     getURL(avatar){
       return require("@/assets/" + avatar + ".png")
@@ -66,20 +71,25 @@ export default {
       this.selectedAvatar = avatar;
       avatar.selected = !avatar.selected;
     },
-    handleCreateProfile(){
-      const profile = {
+    handleUpdateProfile(){
+      const updatedData = {
         name: this.profileName,
-        avatar: this.selectedAvatar.name,
-        starPoints: 0,
-        completedGames: [],
-        starCoordinates: []
+        avatar: this.selectedAvatar.name
       }
 
-      ProfileService.postProfile(profile)
-      .then(res => eventBus.$emit('profile-added', profile))
+      ProfileService.updateProfile(this.selectedProfile._id, updatedData)
+      .then(res => eventBus.$emit('profile-updated', res))
     },
     handleBackButton(){
-      eventBus.$emit('toggle-create-view')
+      eventBus.$emit('toggle-edit-view')
+    },
+    updateDefaultData(){
+      this.profileName = this.selectedProfile.name;
+      for(let index in this.avatars){
+        if (this.avatars[index].name === this.selectedProfile.avatar){
+          this.selectAvatar(this.avatars[index]);
+        }
+      }
     }
   }
 }
