@@ -32,8 +32,7 @@ export default {
     "continent-select": ContinentSelect,
     "picture-puzzle": PicturePuzzle,
     "win-screen": WinScreen,
-    "sky-screen": SkyScreen,
-    "animal-game": AnimalGame,
+    "sky-screen": SkyScreen
   },
   data(){
     return {
