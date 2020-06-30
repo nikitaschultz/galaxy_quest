@@ -38,13 +38,13 @@
 <script>
 import { eventBus } from '@/main.js';
 import ProfileService from '@/services/ProfileService.js';
+import AdminService from '@/services/AdminService.js';
 
 export default {
   name: "admin-view",
   data(){
     return {
       inputPassword: "",
-      password: "Password123",
       awaitingPassword: true,
       passwordCorrect: false,
       passwordIncorrect: false,
@@ -52,14 +52,14 @@ export default {
       newPassword: ""
     }
   },
-  props: ["profiles"],
+  props: ["profiles", "admin"],
   mounted(){
     eventBus.$on('admin-view', () => {
     })
   },
   methods: {
     checkPassword(){
-      if(this.inputPassword === this.password){
+      if(this.inputPassword === this.admin.password){
         this.awaitingPassword = false;
         this.passwordIncorrect = false;
         this.passwordCorrect = true;
@@ -81,9 +81,15 @@ export default {
       this.changePasswordForm = !this.changePasswordForm;
     },
     changePassword(){
-      this.password = this.newPassword;
-      this.newPassword = "";
-      this.toggleChangePasswordForm();
+      const updatedPassword = {
+        password: this.newPassword
+      };
+      AdminService.updateAdmin(this.admin._id, updatedPassword)
+      .then((res) => {
+        this.newPassword = "";
+        this.toggleChangePasswordForm();
+        eventBus.$emit('password-updated')
+      })
     }
   }
 }

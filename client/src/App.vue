@@ -3,7 +3,7 @@
     <h1>Galaxy Quest</h1>
     <button v-if="!profileView" name="change-profile" class="change-profile-button" v-on:click="changeProfile" >Change Profile</button>
     <button v-if="profileView" name="admin-screen" class="change-profile-button" v-on:click="adminScreen" >Admin</button>
-    <admin-view v-if="adminView" :profiles="profiles" />
+    <admin-view v-if="adminView" :profiles="profiles" :admin="admin" />
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
         <gameplay-container
@@ -29,6 +29,7 @@
 <script>
 import PlanetService from './services/PlanetService.js';
 import ProfileService from './services/ProfileService.js';
+import AdminService from './services/AdminService.js';
 import ProfileContainer from './components/Profiles/ProfileContainer.vue';
 import GameplayContainer from './components/GameplayScreen/GameplayContainer.vue';
 import AdminView from './components/Profiles/AdminView.vue';
@@ -57,12 +58,14 @@ export default {
       selectedPlanet: null,
       planetView: false,
       activeGame: null,
-      adminView: false
+      adminView: false,
+      admin: null
     }
   },
   mounted(){
     this.fetchProfiles();
     this.fetchPlanets();
+    this.fetchAdmin();
 
     eventBus.$on('profile-added', (newProfile) => {
       this.profiles.push(newProfile)
@@ -139,6 +142,10 @@ export default {
       this.fetchProfiles();
     })
 
+    eventBus.$on('password-updated', () => {
+      this.fetchAdmin();
+    })
+
   },
   methods: {
     fetchProfiles(){
@@ -148,6 +155,10 @@ export default {
     fetchPlanets(){
       PlanetService.getPlanets()
       .then(planets => this.planets = planets)
+    },
+    fetchAdmin(){
+      AdminService.getAdmin()
+      .then(admin => this.admin = admin[0])
     },
     changeProfile(){
       this.gameWinStatus = false;
