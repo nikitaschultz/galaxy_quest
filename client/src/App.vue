@@ -68,7 +68,7 @@ export default {
     this.fetchAdmin();
 
     eventBus.$on('profile-added', (newProfile) => {
-      this.profiles.push(newProfile)
+      this.profiles.push(newProfile);
       this.activeProfile = newProfile;
       this.profileView = false;
       this.homeScreenViewGame = true;
@@ -115,16 +115,26 @@ export default {
 
     eventBus.$on('game-won', () => {
       this.gameWinStatus = true;
-      this.activeProfile.starPoints += 1;
-      if(!this.activeProfile.completedGames.includes(this.activeGame._id)){
-        this.activeProfile.completedGames.push(this.activeGame._id);
-      };
+      if(!this.activeProfile.completedGames.includes(this.activeGame.name)){
+        this.activeProfile.completedGames.push(this.activeGame.name);
+        this.activeProfile.starPoints += 3;
+      }else{
+        this.activeProfile.starPoints += 1;
+      }
+
+      console.log(this.activeGame._id);
+      console.log(this.activeProfile.completedGames);
+
       const updatedData = {
         starPoints: this.activeProfile.starPoints,
         completedGames: this.activeProfile.completedGames
       }
+
       ProfileService.updateProfile(this.activeProfile._id, updatedData)
-      .then(res => this.fetchProfiles())
+      .then((profile) => {
+        this.fetchProfiles()
+        this.activeProfile = profile
+      })
       })
 
     eventBus.$on('game-selected', (game) => {

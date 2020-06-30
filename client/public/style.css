@@ -72,7 +72,7 @@ body {
   font-size: 20px;
 }
 
-  .play-game-button:hover, .edit-button:hover {
+.play-game-button:hover, .edit-button:hover {
   color: orangered;
   background-color: white;
 }

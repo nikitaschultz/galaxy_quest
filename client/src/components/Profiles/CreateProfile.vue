@@ -76,7 +76,7 @@ export default {
       }
 
       ProfileService.postProfile(profile)
-      .then(res => eventBus.$emit('profile-added', profile))
+      .then(res => eventBus.$emit('profile-added', res))
     },
     handleBackButton(){
       eventBus.$emit('toggle-create-view')
