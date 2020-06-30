@@ -5,6 +5,8 @@
       <div class="game-instructions" v-if="activeGame">
         <continent-select-instructions v-if="activeGame.type === 'ContinentSelect'" />
         <picture-puzzle-instructions v-if="activeGame.type === 'PicturePuzzle'" />
+        <number-game-instructions v-if="activeGame.type === 'NumberGame'" />
+        <animal-game-instructions v-if="activeGame.type === 'AnimalGame'" />
         <memory-match-instructions v-if="activeGame.type === 'MemoryMatch'" />
       </div>
       <sky-screen-instructions v-if="skyScreenStatus" :activeProfile="activeProfile" />
@@ -22,6 +24,11 @@ import PicturePuzzleInstructions from './GameInstructions/PicturePuzzleInstructi
 import MemoryMatchInstructions from './GameInstructions/MemoryMatchInstructions.vue';
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
+
+// LUKE RENDER INSTRUCTIONS //
+import AnimalGameInstructions from './GameInstructions/AnimalGameInstructions.vue'
+//                                   //
+
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 
@@ -34,7 +41,8 @@ export default {
     "picture-puzzle-instructions": PicturePuzzleInstructions,
     "memory-match-instructions": MemoryMatchInstructions,
     "sky-screen-instructions": SkyScreenInstructions,
-    "planet-instructions": PlanetInstructions
+    "planet-instructions": PlanetInstructions,
+    "animal-game-instructions": AnimalGameInstructions
   },
   methods: {
     handleHomeButtonClick(){

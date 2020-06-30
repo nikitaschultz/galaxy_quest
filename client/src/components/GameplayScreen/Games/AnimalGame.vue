@@ -1,7 +1,8 @@
 <template lang="html">
   <div class="game-container">
-
-    <button v-if="loading" v-on:click="loadInstructions" type="button" name="button">Let's Go!</button>
+    <div>
+    <button v-if="loading" v-on:click="loadInstructions" name="start-game" class="start-game-button">Let's Go!</button>
+  </div>
 
     <div v-if="!loading && animalObjects" class="row">
       <div class="column">
@@ -18,21 +19,22 @@
         <img v-if="showImage[3]" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
       </div>
       <div class="column">
-        <p v-if="this.playerAnswer != this.solution">Where is the {{this.solution}}?</p>
-        <p v-if="this.playerAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
+        <p v-if="this.selectedAnswer != this.solution">Where is the {{this.solution}}?</p>
+        <p v-if="this.selectedAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
       </div>
       <div class="column">
-        <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
-        <button v-if="this.playerAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
-        <button v-if="this.playerAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="winnerGameOver">Finish</button>
-        <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
+        <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
+        <button v-if="this.selectedAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
+        <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button>
+        <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {eventBus} from './main.js';
+
+import {eventBus} from '@/main.js';
 import AnimalGameService from '@/services/AnimalGameService.js'
 import ProfileService from '@/services/ProfileService.js'
 
@@ -41,12 +43,12 @@ export default {
   props: ["activeProfile"],
   data(){
     return {
-      //Loading screen defaults as true
+      // loading
       loading: true,
       // result of mounted fetch
       animalObjects: null,
       // the players answer
-      playerAnswer: "",
+      selectedAnswer: "",
       /// round counter
       gameRound: 1,
       /// lives counter
@@ -58,7 +60,13 @@ export default {
 
   mounted(){
     this.fetchGameData();
-  },
+
+
+    eventBus.$on('reset-animalGame-select', () => {
+      this.loading = true;
+      this.handleNextRound();
+  })
+},
 
   methods: {
     fetchGameData(){
@@ -86,31 +94,31 @@ export default {
     /////Game logic ////
 
     handleClickOne(){
-      if(!this.playerAnswer){
-        this.playerAnswer = this.animalObjects[0].name;
+      if(!this.selectedAnswer){
+        this.selectedAnswer = this.animalObjects[0].name;
         this.showImage[0] = true;
       }
     },
     handleClickTwo(){
-      if(!this.playerAnswer){
-        this.playerAnswer = this.animalObjects[1].name;
+      if(!this.selectedAnswer){
+        this.selectedAnswer = this.animalObjects[1].name;
         this.showImage[1] = true;
       }
     },
     handleClickThree(){
-      if(!this.playerAnswer){
-        this.playerAnswer = this.animalObjects[2].name;
+      if(!this.selectedAnswer){
+        this.selectedAnswer = this.animalObjects[2].name;
         this.showImage[2] = true;
       }
     },
     handleClickFour(){
-      if(!this.playerAnswer){
-        this.playerAnswer = this.animalObjects[3].name;
+      if(!this.selectedAnswer){
+        this.selectedAnswer = this.animalObjects[3].name;
         this.showImage[3] = true;
       }
     },
     handleTryAgain(){
-      this.playerAnswer = "";
+      this.selectedAnswer = "";
       this.playerLives --;
       this.showImage.forEach((item,index) => {
         this.showImage[index] = false;
@@ -118,7 +126,7 @@ export default {
     },
     handleNextRound(){
       this.gameRound ++;
-      this.playerAnswer = "";
+      this.selectedAnswer = "";
       this.showImage.forEach((item,index) => {
         this.showImage[index] = false;
       });
@@ -127,27 +135,18 @@ export default {
 
     ///// WIN STATE /////
 
-    winnerGameOver(){
-      // If Win-Con is met
-      if (this.playerAnswer === this.solution && this.gameRound === 3){
-        // Update players profile
-        let id = this.activeProfile._id
-        let playerData = {
-
-          starPoints: this.activeProfile.starPoints ++,
-          completedGames: [{
-            gameID: id,
-            completed: true
-          }]
-        }
-        ProfileService.updateProfile(id, playerData)
+    handleGameOver(){
+      if(this.selectedAnswer === this.solution){
+        eventBus.$emit('game-won')
+      }else{
+        eventBus.$emit('game-lost')
       }
     },
 
     // Game loading screen
     loadInstructions(){
       eventBus.$emit('animals-game-loaded', this.solution)
-      this.loading = false;
+      this.loading = false
 
       ////////////////////
     }
@@ -189,6 +188,15 @@ export default {
 
 <style lang="css" scoped>
 
+.game-container {
+  background-color: white;
+  height: 75vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
   .row {
     display: flex;
     flex-wrap: wrap;
