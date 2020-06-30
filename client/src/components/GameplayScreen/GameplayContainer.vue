@@ -25,7 +25,7 @@ import ContinentSelect from './Games/ContinentSelect.vue';
 import PicturePuzzle from './Games/PicturePuzzle.vue';
 
 // Keith and Luke
-import AnimalsGame from './Games/Animals/App.vue'
+import AnimalsGame from './Games/AnimalGame.vue'
 // import NumbersGame from './Games/Numbers/app.vue'
 
 //

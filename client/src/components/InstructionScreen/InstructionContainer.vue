@@ -26,9 +26,8 @@ import PicturePuzzleInstructions from './GameInstructions/PicturePuzzleInstructi
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
 
-// KEITH AND LUKE RENDER INSTRUCTIONS //
+// LUKE RENDER INSTRUCTIONS //
 import AnimalGameInstructions from './GameInstructions/AnimalGameInstructions.vue'
-import NumberGameInstructions from './GameInstructions/NumberGameInstructions.vue'
 //                                   //
 
 import Home from './Home.vue';
@@ -43,7 +42,6 @@ export default {
     "picture-puzzle-instructions": PicturePuzzleInstructions,
     "sky-screen-instructions": SkyScreenInstructions,
     "planet-instructions": PlanetInstructions,
-    "number-game-instructions": NumberGameInstructions,
     "animal-game-instructions": AnimalGameInstructions
   },
   methods: {
