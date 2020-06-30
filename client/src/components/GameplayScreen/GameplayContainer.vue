@@ -20,7 +20,12 @@
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
+<<<<<<< HEAD
 import PicturePuzzle from './Games/PicturePuzzle.vue';
+=======
+import LandmarkPuzzle from './Games/LandmarkPuzzle.vue';
+import AnimalGame from './Games/Animals/app.vue';
+>>>>>>> dbeafb32c68c9d71035234776ac7faae4232429a
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';
 
