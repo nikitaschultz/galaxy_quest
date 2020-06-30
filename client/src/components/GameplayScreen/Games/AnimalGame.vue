@@ -33,7 +33,11 @@
 </template>
 
 <script>
+<<<<<<< HEAD:client/src/components/GameplayScreen/Games/AnimalGame.vue
 import {eventBus} from '@/main.js';
+=======
+import {eventBus} from './main.js';
+>>>>>>> develop:client/src/components/GameplayScreen/Games/Animals/App.vue
 import AnimalGameService from '@/services/AnimalGameService.js'
 import ProfileService from '@/services/ProfileService.js'
 

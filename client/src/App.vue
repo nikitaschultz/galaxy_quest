@@ -2,6 +2,8 @@
   <div class="app-container">
     <h1>Galaxy Quest</h1>
     <button v-if="!profileView" name="change-profile" class="change-profile-button" v-on:click="changeProfile" >Change Profile</button>
+    <button v-if="profileView" name="admin-screen" class="change-profile-button" v-on:click="adminScreen" >Admin</button>
+    <admin-view v-if="adminView" :profiles="profiles" :admin="admin" />
     <profile-container v-if="profileView" :profiles="profiles" />
       <div class="containers">
         <gameplay-container
@@ -27,8 +29,10 @@
 <script>
 import PlanetService from './services/PlanetService.js';
 import ProfileService from './services/ProfileService.js';
+import AdminService from './services/AdminService.js';
 import ProfileContainer from './components/Profiles/ProfileContainer.vue';
 import GameplayContainer from './components/GameplayScreen/GameplayContainer.vue';
+import AdminView from './components/Profiles/AdminView.vue';
 import InstructionContainer from './components/InstructionScreen/InstructionContainer.vue';
 import { eventBus } from './main.js';
 
@@ -37,7 +41,8 @@ export default {
   components: {
     "profile-container": ProfileContainer,
     "gameplay-container": GameplayContainer,
-    "instruction-container": InstructionContainer
+    "instruction-container": InstructionContainer,
+    "admin-view": AdminView
   },
   data(){
     return {
@@ -52,15 +57,18 @@ export default {
       skyScreenStatus: false,
       selectedPlanet: null,
       planetView: false,
-      activeGame: null
+      activeGame: null,
+      adminView: false,
+      admin: null
     }
   },
   mounted(){
     this.fetchProfiles();
     this.fetchPlanets();
+    this.fetchAdmin();
 
     eventBus.$on('profile-added', (newProfile) => {
-      this.profiles.push(newProfile)
+      this.profiles.push(newProfile);
       this.activeProfile = newProfile;
       this.profileView = false;
       this.homeScreenViewGame = true;
@@ -107,14 +115,45 @@ export default {
 
     eventBus.$on('game-won', () => {
       this.gameWinStatus = true;
-      this.activeProfile.starPoints += 1;
-    })
+      if(!this.activeProfile.completedGames.includes(this.activeGame.name)){
+        this.activeProfile.completedGames.push(this.activeGame.name);
+        this.activeProfile.starPoints += 3;
+      }else{
+        this.activeProfile.starPoints += 1;
+      }
+
+      console.log(this.activeGame._id);
+      console.log(this.activeProfile.completedGames);
+
+      const updatedData = {
+        starPoints: this.activeProfile.starPoints,
+        completedGames: this.activeProfile.completedGames
+      }
+
+      ProfileService.updateProfile(this.activeProfile._id, updatedData)
+      .then((profile) => {
+        this.fetchProfiles()
+        this.activeProfile = profile
+      })
+      })
 
     eventBus.$on('game-selected', (game) => {
       this.activeGame = game;
       this.planetView = false;
       this.homeScreenViewGame = false;
       this.homeScreenViewInstructions = false;
+    })
+
+    eventBus.$on('toggle-admin-view', () => {
+      this.adminView = !this.adminView;
+    })
+
+    eventBus.$on('profile-deleted', () => {
+      this.fetchProfiles();
+    })
+
+    eventBus.$on('password-updated', () => {
+      this.fetchAdmin();
     })
 
   },
@@ -127,6 +166,10 @@ export default {
       PlanetService.getPlanets()
       .then(planets => this.planets = planets)
     },
+    fetchAdmin(){
+      AdminService.getAdmin()
+      .then(admin => this.admin = admin[0])
+    },
     changeProfile(){
       this.gameWinStatus = false;
       this.skyScreenStatus = false;
@@ -136,6 +179,10 @@ export default {
       this.activeProfile = null;
       this.planetView = false;
       this.activeGame = null;
+    },
+    adminScreen(){
+      eventBus.$emit('admin-view');
+      this.adminView = !this.adminView;
     }
   }
 }

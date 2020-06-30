@@ -18,6 +18,10 @@ db.profiles.insertMany([
   }
 ])
 
+db.admin.insertOne({
+  password: "password"
+})
+
 db.planets.insertMany([
   {
     name: "numbers",

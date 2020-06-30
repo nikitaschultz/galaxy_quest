@@ -1,8 +1,11 @@
 <template lang="html">
-  <div v-on:click="handleSelectProfile" class="profile">
-    <h3>{{ profile.name }}</h3>
-    <img v-bind:src="avatarSRC" alt="avatar-picture" height="80px">
-    <h4>Star Points: {{ profile.starPoints }}</h4>
+  <div class="profile-content">
+    <div v-on:click="handleSelectProfile" class="profile">
+      <h3>{{ profile.name }}</h3>
+      <img v-bind:src="avatarSRC" alt="avatar-picture" height="80px">
+      <h4>Star Points: {{ profile.starPoints }}</h4>
+    </div>
+    <button type="button" name="edit-profile" class="edit-button" v-on:click="toggleEditView" >Edit Profile</button>
   </div>
 </template>
 
@@ -20,6 +23,9 @@ export default {
   methods: {
     handleSelectProfile(){
       eventBus.$emit('profile-selected', this.profile)
+    },
+    toggleEditView(){
+      eventBus.$emit('toggle-edit-view', this.profile)
     }
   }
 }
@@ -30,7 +36,7 @@ export default {
   .profile {
     border: solid 2px midnightblue;
     width: 200px;
-    height: 190px;
+    height: 180px;
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -42,6 +48,16 @@ export default {
   .profile:hover {
     background-color: white;
     box-shadow: 0 0 20px gold;
+  }
+
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h3 {
+    margin: 0;
   }
 
 </style>
