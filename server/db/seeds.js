@@ -189,3 +189,42 @@ db.animals.insertMany([
       name: "Sheep"
     }
 ])
+
+db.animalsmatch.insertMany([
+  {
+    name: "Monkey",
+    image: "monkey",
+    facts: []
+  },
+  {
+    name: "Bunny",
+    image: "bunny",
+    facts: []
+  },
+  {
+    name: "Cow",
+    image: "cow",
+    facts: []
+  },
+  {
+    name: "Parrot",
+    image: "parrot",
+    facts: []
+  },
+  {
+    name: "Squirrel",
+    image: "squirrel",
+    facts: []
+  },
+  {
+    name: "Tiger",
+    image: "tiger",
+    facts: []
+  },
+  {
+    name: "Kangaroo",
+    image: "kangaroo",
+    facts: []
+  }
+
+])

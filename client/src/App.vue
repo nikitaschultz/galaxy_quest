@@ -57,7 +57,7 @@ export default {
       skyScreenStatus: false,
       selectedPlanet: null,
       planetView: false,
-      activeGame: {type: 'MemoryMatch'},
+      activeGame: {type: "MemoryMatch"},
       adminView: false,
       admin: null
     }
