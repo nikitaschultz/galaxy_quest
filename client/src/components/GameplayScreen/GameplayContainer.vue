@@ -5,6 +5,8 @@
         <div class="games" v-if="activeGame">
           <continent-select v-if="activeGame.type === 'ContinentSelect'" />
           <picture-puzzle v-if="activeGame.type === 'PicturePuzzle'" />
+          <animals-game v-if="activeGame.type === 'AnimalGame'" />
+          <!-- <numbers-game v-if="activeGame.type === 'NumbersGame'" /> -->
         </div>
         <sky-screen v-if="skyScreenStatus" :activeProfile="activeProfile" />
         <home :planets="planets" v-if="homeScreenViewGame" />
@@ -21,6 +23,13 @@ import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
 import PicturePuzzle from './Games/PicturePuzzle.vue';
+
+// Keith and Luke
+import AnimalsGame from './Games/Animals/App.vue'
+// import NumbersGame from './Games/Numbers/app.vue'
+
+//
+
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';
 
@@ -33,7 +42,8 @@ export default {
     "picture-puzzle": PicturePuzzle,
     "win-screen": WinScreen,
     "sky-screen": SkyScreen,
-    "animal-game": AnimalGame,
+    // "numbers-game": NumbersGame,
+    "animals-game": AnimalsGame
   },
   data(){
     return {

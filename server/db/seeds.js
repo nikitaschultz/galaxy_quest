@@ -22,7 +22,14 @@ db.planets.insertMany([
   {
     name: "numbers",
     title: "Numbers Planet",
-    games: []
+    games: [
+      {
+        name: "Count the Ducks",
+        description: "Since a star fell to Earth, ducks have been popping up everywhere! Can you help us count them ?",
+        type: "NumbersGame",
+        dataset: null
+      }
+    ]
   },
   {
     name: "geography",
@@ -45,9 +52,19 @@ db.planets.insertMany([
   {
     name: "animals",
     title: "Animals Planet",
-    games: []
+    games: [
+      {
+        name: "Animals of the Planet",
+        description: "Without star-light, the animals of Earth are hard to see. Can you help find them?",
+        type: "AnimalGame",
+        dataSet: "Animals"
+      }
+    ]
   }
 ])
+
+
+// dataset stroed below, to be refactored in future
 
 db.landmarks.insertMany([
   {

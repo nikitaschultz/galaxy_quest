@@ -5,6 +5,11 @@
       <div class="game-instructions" v-if="activeGame">
         <continent-select-instructions v-if="activeGame.type === 'ContinentSelect'" />
         <picture-puzzle-instructions v-if="activeGame.type === 'PicturePuzzle'" />
+        <!-- KEITH AND LUKE RENDER INSTRUCTIONS -->
+        <number-game-instructions v-if="activeGame.type === 'NumberGame'" />
+        <animal-game-instructions v-if="activeGame.type === 'AnimalGame'" />
+        <!--                                    -->
+
       </div>
       <sky-screen-instructions v-if="skyScreenStatus" :activeProfile="activeProfile" />
       <planet-instructions v-if="planetView" :selectedPlanet="selectedPlanet" />
@@ -20,6 +25,12 @@ import ContinentSelectInstructions from './GameInstructions/ContinentSelectInstr
 import PicturePuzzleInstructions from './GameInstructions/PicturePuzzleInstructions.vue';
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
+
+// KEITH AND LUKE RENDER INSTRUCTIONS //
+import AnimalGameInstructions from './GameInstructions/AnimalGameInstructions.vue'
+import NumberGameInstructions from './GameInstructions/NumberGameInstructions.vue'
+//                                   //
+
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 
@@ -31,7 +42,9 @@ export default {
     "continent-select-instructions": ContinentSelectInstructions,
     "picture-puzzle-instructions": PicturePuzzleInstructions,
     "sky-screen-instructions": SkyScreenInstructions,
-    "planet-instructions": PlanetInstructions
+    "planet-instructions": PlanetInstructions,
+    "number-game-instructions": NumberGameInstructions,
+    "animal-game-instructions": AnimalGameInstructions
   },
   methods: {
     handleHomeButtonClick(){
