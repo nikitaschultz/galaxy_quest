@@ -1,6 +1,6 @@
 <template lang="html">
-  <div class="planet">
-    <img :src="planetSRC" :alt="planet.name" width="100px" v-on:click="handleSelectPlanet" :class="planet.name">
+  <div v-bind:class="isSelected" v-on:click="handleSelectPlanet" >
+    <img :src="planetSRC" :alt="planet.name" width="80px" :class="planet.name">
   </div>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   computed: {
     planetSRC(){
       return require("@/assets/" + this.planet.name + ".png")
+    },
+    isSelected(){
+      return this.planet.isSelected ? "selected-planet" : "planet"
     }
   },
   methods: {
@@ -26,18 +29,22 @@ export default {
 <style lang="css" scoped>
 
   .geography {
-    margin: 10vh 5vw;
+    margin: 10vh 6.5vw;
   }
 
   .animals {
-    margin: 50vh 5vw;
+    margin: 50vh 6.5vw;
   }
 
   .numbers {
-    margin: 30vh 5vw;
+    margin: 30vh 6.5vw;
   }
 
   .planet:hover {
+    filter: drop-shadow(0 0 10px gold);
+  }
+
+  .selected-planet {
     filter: drop-shadow(0 0 10px gold);
   }
 

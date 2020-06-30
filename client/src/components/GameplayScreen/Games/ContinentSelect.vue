@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="game-container">
-    <button v-if="loading" v-on:click="loadInstructions" type="button" name="button">Let's Go!</button>
+    <button v-if="loading" v-on:click="loadInstructions" name="start-game" class="start-game-button">Let's Go!</button>
     <GChart v-if="!loading" type="GeoChart" :data="chartData" :options="chartOptions" :events="chartEvents" ref="gChart" /><br>
   </div>
 </template>
@@ -53,6 +53,11 @@ export default {
   },
   mounted(){
     this.getCorrectAnswer()
+
+    eventBus.$on('reset-continent-select', () => {
+      this.loading = true;
+      this.getCorrectAnswer()
+    })
   },
   methods: {
     getCorrectAnswer(){
@@ -65,9 +70,9 @@ export default {
     },
     checkAnswer(){
       if(this.selectedAnswer === this.correctAnswer){
-        eventBus.$emit('continent-select-game-won')
+        eventBus.$emit('game-won')
       }else{
-        eventBus.$emit('continent-select-game-lost')
+        eventBus.$emit('game-lost')
       }
     }
   }

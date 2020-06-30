@@ -8,10 +8,10 @@
         <p>Explorer, will you help us put the pieces back in the right place?</p><br>
       </div>
       <div v-if="ready">
-        <h2>{{ landmark.name }}</h2>
-        <h3>{{ landmark.location }}</h3>
+        <h2>{{ selectedItem.name }}</h2>
+        <h3>{{ selectedItem.location }}</h3>
         <p>Click on two pieces of the puzzle to swap them!</p><br>
-        <img :src="imageSRC" alt="landmark-image">
+        <img :src="imageSRC" alt="image">
         <h3>Fun Fact:</h3>
         <p>{{ displayFact }}</p>
       </div>
@@ -32,10 +32,10 @@
 import { eventBus } from '../../../main.js';
 
 export default {
-  name: "landmark-puzzle-instructions",
+  name: "picture-puzzle-instructions",
   data(){
     return {
-      landmark: null,
+      selectedItem: null,
       ready: false,
       resultPending: true,
       gameWon: false,
@@ -44,21 +44,21 @@ export default {
     }
   },
   mounted(){
-    eventBus.$on('landmark-puzzle-game-loaded', (landmark) => {
-      this.landmark = landmark;
-      this.displayFact = this.landmark.facts[Math.floor(Math.random() * this.landmark.facts.length)]
+    eventBus.$on('picture-puzzle-game-loaded', (item) => {
+      this.selectedItem = item;
+      this.displayFact = this.selectedItem.facts[Math.floor(Math.random() * this.selectedItem.facts.length)]
     })
 
-    eventBus.$on('landmark-puzzle-game-ready', () => {
+    eventBus.$on('picture-puzzle-game-ready', () => {
       this.ready = true;
-      this.imageSRC = require("@/assets/landmarkpuzzle/" + this.landmark.image + ".png")
+      this.imageSRC = require("@/assets/landmarks/" + this.selectedItem.image + ".png")
     })
 
-    eventBus.$on('landmark-puzzle-game-shuffle-fact', () => {
-      this.displayFact = this.landmark.facts[Math.floor(Math.random() * this.landmark.facts.length)]
+    eventBus.$on('picture-puzzle-game-shuffle-fact', () => {
+      this.displayFact = this.selectedItem.facts[Math.floor(Math.random() * this.selectedItem.facts.length)]
     })
 
-    eventBus.$on('landmark-puzzle-game-won', () => {
+    eventBus.$on('game-won', () => {
       this.resultPending = false;
       this.gameWon = true;
     })

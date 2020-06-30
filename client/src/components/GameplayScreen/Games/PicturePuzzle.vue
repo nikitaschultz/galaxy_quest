@@ -1,21 +1,21 @@
 <template lang="html">
   <div class="game-container">
-    <button v-if="loading" v-on:click="loadPuzzle" type="button" name="button">Let's Go!</button>
+    <button v-if="loading" v-on:click="loadPuzzle" name="start-game" class="start-game-button">Let's Go!</button>
     <canvas id="canvas" width="600" height="400" :class="hiddenClass"></canvas>
   </div>
 </template>
 
 <script>
 import { eventBus } from '../../../main.js';
-import LandmarkPuzzleService from '../../../services/Games/LandmarkPuzzleService.js';
+import PicturePuzzleService from '../../../services/Games/PicturePuzzleService.js';
 
 export default {
-  name: "landmark-puzzle",
+  name: "picture-puzzle",
   data(){
     return {
       loading: true,
-      landmarks: [],
-      selectedLandmark: null,
+      data: [],
+      selectedItem: null,
       puzzleImage: ""
     }
   },
@@ -25,21 +25,21 @@ export default {
     }
   },
   mounted(){
-    this.fetchLandmarks();
+    this.fetchData();
   },
   methods: {
     loadPuzzle(){
       this.loading = false;
-      eventBus.$emit('landmark-puzzle-game-ready');
+      eventBus.$emit('picture-puzzle-game-ready');
     },
-    fetchLandmarks(){
-      LandmarkPuzzleService.getLandmarks()
-      .then((landmarks) => {
-        this.landmarks = landmarks;
-        const selectedLandmark = landmarks[Math.floor(Math.random() * landmarks.length)];
-        this.selectedLandmark = selectedLandmark;
-        this.puzzleImage = require("@/assets/landmarkpuzzle/" + selectedLandmark.image + ".png");
-        eventBus.$emit('landmark-puzzle-game-loaded', selectedLandmark);
+    fetchData(){
+      PicturePuzzleService.getLandmarks()
+      .then((data) => {
+        this.data = data;
+        const selectedItem = data[Math.floor(Math.random() * data.length)];
+        this.selectedItem = selectedItem;
+        this.puzzleImage = require("@/assets/landmarks/" + selectedItem.image + ".png");
+        eventBus.$emit('picture-puzzle-game-loaded', selectedItem);
         this.createPuzzle();
       })
     },
@@ -210,7 +210,7 @@ export default {
       }
 
       function resetPuzzleAndCheckWin(){
-        eventBus.$emit('landmark-puzzle-game-shuffle-fact');
+        eventBus.$emit('picture-puzzle-game-shuffle-fact');
         ctx.clearRect(0,0, puzzleWidth, puzzleHeight);
         let gameWin = true;
         let i;
@@ -232,7 +232,7 @@ export default {
         document.onmousedown = null;
         document.onmousemove = null;
         document.onmouseup = null;
-        eventBus.$emit('landmark-puzzle-game-won')
+        eventBus.$emit('game-won')
       }
     }
   }
