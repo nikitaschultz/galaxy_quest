@@ -33,7 +33,7 @@
 
 <script>
 import {eventBus} from './main.js';
-import AnimalGameService from './services/AnimalGameService.js'
+import AnimalGameService from '@/services/AnimalGameService.js'
 import ProfileService from '@/services/ProfileService.js'
 
 export default {
