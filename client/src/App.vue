@@ -57,7 +57,7 @@ export default {
       skyScreenStatus: false,
       selectedPlanet: null,
       planetView: false,
-      activeGame: {type: "MemoryMatch"},
+      activeGame: null,
       adminView: false,
       admin: null
     }
@@ -78,8 +78,8 @@ export default {
     eventBus.$on('profile-selected', (selectedProfile) => {
       this.activeProfile = selectedProfile;
       this.profileView = false;
-      this.homeScreenViewGame = false;
-      this.homeScreenViewInstructions = false;
+      this.homeScreenViewGame = true;
+      this.homeScreenViewInstructions = true;
     })
 
     eventBus.$on('home-view', () => {

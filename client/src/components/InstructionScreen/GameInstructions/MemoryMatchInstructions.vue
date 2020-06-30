@@ -3,9 +3,8 @@
     <h2>Animal Memory Match</h2>
     <div v-if="resultPending">
       <div v-if="!ready">
-        <p>Planet Earth needs your help!</p>
-        <p>A star has fallen and we can't find it!</p>
-        <p>Will you help us?</p>
+        <p>The animals have lost their mate!</p>
+        <p>Will you help them find each other?</p>
       </div>
       <div v-if="ready">
         <p>Click a card to turn it over.</p>
