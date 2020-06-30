@@ -27,9 +27,6 @@ import PicturePuzzle from './Games/PicturePuzzle.vue';
 // Keith and Luke
 import AnimalsGame from './Games/AnimalGame.vue'
 // import NumbersGame from './Games/Numbers/app.vue'
-
-//
-
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';
 
@@ -41,13 +38,9 @@ export default {
     "continent-select": ContinentSelect,
     "picture-puzzle": PicturePuzzle,
     "win-screen": WinScreen,
-<<<<<<< HEAD
     "sky-screen": SkyScreen,
     // "numbers-game": NumbersGame,
     "animals-game": AnimalsGame
-=======
-    "sky-screen": SkyScreen
->>>>>>> develop
   },
   data(){
     return {
