@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="game-container">
     <button v-if="loading" v-on:click="loadInstructions" name="start-game" class="start-game-button">Let's Go!</button>
-    <div v-if="!loading" v-for="card in gameCards" v-on:click="processSelect(card)">
+    <div v-if="!loading" v-for="(card, index) in gameCards" v-on:click="processSelect(card)" :key="index">
       <div class="game-card" v-if="card.inPlay">
         <div v-if="!card.isSelected">
           <p class="card-back">?</p>
