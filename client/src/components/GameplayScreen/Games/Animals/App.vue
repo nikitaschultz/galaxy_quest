@@ -25,7 +25,7 @@
       <div class="column">
         <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
         <button v-if="this.selectedAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
-        <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="winnerGameOver">Finish</button>
+        <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button>
         <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
       </div>
     </div>
@@ -71,7 +71,6 @@ export default {
     fetchGameData(){
       AnimalGameService.getAnimals()
       .then (data => this.animalObjects = this.shuffleArray(data))
-      .this.loadInstructions()
     },
     shuffleArray(array){
       var currentIndex = array.length, temporaryValue, randomIndex;
@@ -145,7 +144,7 @@ export default {
 
     // Game loading screen
     loadInstructions(){
-      eventBus.$emit('animal-game-loaded', this.solution)
+      eventBus.$emit('animals-game-loaded', this.solution)
       this.loading = false
 
       ////////////////////
