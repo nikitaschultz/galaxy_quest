@@ -1,39 +1,48 @@
 <template lang="html">
-  <div v-if="animalObjects" class="row">
+  <div class="game-container">
 
-    <div class="column">
-      <p> Remaining lives : {{this.playerLives}}</p>
-      <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
-      <img v-if="showImage[0]" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
-      <img v-if="!showImage[1]" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
-      <img v-if="showImage[1]" v-bind:src="imageTwo" v-bind:name="this.animalObjects[1].name">
-    </div>
-    <div class="column">
-      <img v-if="!showImage[2]" v-bind:src="imageThreeShadow" v-bind:name="this.animalObjects[2].name" v-on:click="handleClickThree">
-      <img v-if="showImage[2]" v-bind:src="imageThree" v-bind:name="this.animalObjects[2].name">
-      <img v-if="!showImage[3]" v-bind:src="imageFourShadow" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
-      <img v-if="showImage[3]" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
-    </div>
-    <div class="column">
-      <p v-if="this.playerAnswer != this.solution">Where is the {{this.solution}}?</p>
-      <p v-if="this.playerAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
-    </div>
-    <div class="column">
-      <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
-      <button v-if="this.playerAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
-      <button v-if="this.playerAnswer === this.solution && this.gameRound === 3" type="button" name="button">Finish</button>
-      <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
+    <button v-if="loading" v-on:click="loadInstructions" type="button" name="button">Let's Go!</button>
+
+    <div v-if="!loading && animalObjects" class="row">
+      <div class="column">
+        <p> Remaining lives : {{this.playerLives}}</p>
+        <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
+        <img v-if="showImage[0]" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
+        <img v-if="!showImage[1]" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
+        <img v-if="showImage[1]" v-bind:src="imageTwo" v-bind:name="this.animalObjects[1].name">
+      </div>
+      <div class="column">
+        <img v-if="!showImage[2]" v-bind:src="imageThreeShadow" v-bind:name="this.animalObjects[2].name" v-on:click="handleClickThree">
+        <img v-if="showImage[2]" v-bind:src="imageThree" v-bind:name="this.animalObjects[2].name">
+        <img v-if="!showImage[3]" v-bind:src="imageFourShadow" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
+        <img v-if="showImage[3]" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
+      </div>
+      <div class="column">
+        <p v-if="this.playerAnswer != this.solution">Where is the {{this.solution}}?</p>
+        <p v-if="this.playerAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
+      </div>
+      <div class="column">
+        <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
+        <button v-if="this.playerAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
+        <button v-if="this.playerAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="winnerGameOver">Finish</button>
+        <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import {eventBus} from './main.js';
-import AnimalGameService from './service/AnimalGameService.js'
+import AnimalGameService from './services/AnimalGameService.js'
+import ProfileService from '@/services/ProfileService.js'
 
 export default {
+  name: 'animal-game',
+  props: ["activeProfile"],
   data(){
     return {
+      //Loading screen defaults as true
+      loading: true,
       // result of mounted fetch
       animalObjects: null,
       // the players answer
@@ -46,10 +55,11 @@ export default {
       showImage: [false,false,false,false]
     }
   },
+
   mounted(){
     this.fetchGameData();
-
   },
+
   methods: {
     fetchGameData(){
       AnimalGameService.getAnimals()
@@ -108,11 +118,39 @@ export default {
     },
     handleNextRound(){
       this.gameRound ++;
-      this.handleTryAgain();
+      this.playerAnswer = "";
+      this.showImage.forEach((item,index) => {
+        this.showImage[index] = false;
+      });
       this.fetchGameData();
-    }
+    },
 
-    ////////////////////
+    ///// WIN STATE /////
+
+    winnerGameOver(){
+      // If Win-Con is met
+      if (this.playerAnswer === this.solution && this.gameRound === 3){
+        // Update players profile
+        let id = this.activeProfile._id
+        let playerData = {
+
+          starPoints: this.activeProfile.starPoints ++,
+          completedGames: [{
+            gameID: id,
+            completed: true
+          }]
+        }
+        ProfileService.updateProfile(id, playerData)
+      }
+    },
+
+    // Game loading screen
+    loadInstructions(){
+      eventBus.$emit('animals-game-loaded', this.solution)
+      this.loading = false;
+
+      ////////////////////
+    }
   },
   computed: {
     ///Display images (options)
@@ -151,21 +189,21 @@ export default {
 
 <style lang="css" scoped>
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 4px;
-}
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+  }
 
-/* Create two equal columns that sits next to each other */
-.column {
-  flex: 50%;
-  padding: 0 4px;
-}
+  /* Create two equal columns that sits next to each other */
+  .column {
+    flex: 50%;
+    padding: 0 4px;
+  }
 
-.column img {
-  margin-top: 8px;
-  vertical-align: middle;
-}
+  .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+  }
 
 </style>

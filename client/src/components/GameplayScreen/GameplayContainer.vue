@@ -20,7 +20,8 @@
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
-import PicturePuzzle from './Games/PicturePuzzle.vue';
+import LandmarkPuzzle from './Games/LandmarkPuzzle.vue';
+import AnimalGame from './Games/Animals/app.vue';
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';
 
@@ -32,7 +33,8 @@ export default {
     "continent-select": ContinentSelect,
     "picture-puzzle": PicturePuzzle,
     "win-screen": WinScreen,
-    "sky-screen": SkyScreen
+    "sky-screen": SkyScreen,
+    "animal-game": AnimalGame,
   },
   data(){
     return {
