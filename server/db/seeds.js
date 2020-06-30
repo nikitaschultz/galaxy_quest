@@ -148,3 +148,24 @@ db.landmarkpuzzle.insertMany([
     image: "bigben"
   }
 ])
+
+db.animals.insertMany([
+    {
+      name: "Donkey",
+    },
+    {
+      name: "Goat"
+    },
+    {
+      name: "Goose"
+    },
+    {
+      name: "Horse"
+    },
+    {
+      name: "Pig"
+    },
+    {
+      name: "Sheep"
+    }
+])
