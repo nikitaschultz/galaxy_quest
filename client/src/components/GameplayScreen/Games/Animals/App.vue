@@ -1,6 +1,10 @@
 <template lang="html">
   <div class="game-container">
-    <div v-if="animalObjects" class="row">
+    <div>
+    <button v-if="loading" v-on:click="loadInstructions" name="start-game" class="start-game-button">Let's Go!</button>
+  </div>
+
+    <div v-if="!loading && animalObjects" class="row">
       <div class="column">
         <p> Remaining lives : {{this.playerLives}}</p>
         <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
@@ -38,6 +42,8 @@ export default {
   props: ["activeProfile"],
   data(){
     return {
+      // loading
+      loading: true,
       // result of mounted fetch
       animalObjects: null,
       // the players answer
@@ -54,7 +60,9 @@ export default {
   mounted(){
     this.fetchGameData();
 
+
     eventBus.$on('reset-animalGame-select', () => {
+      this.loading = true;
       this.handleNextRound();
   })
 },
@@ -63,6 +71,7 @@ export default {
     fetchGameData(){
       AnimalGameService.getAnimals()
       .then (data => this.animalObjects = this.shuffleArray(data))
+      .this.loadInstructions()
     },
     shuffleArray(array){
       var currentIndex = array.length, temporaryValue, randomIndex;
@@ -136,7 +145,8 @@ export default {
 
     // Game loading screen
     loadInstructions(){
-      eventBus.$emit('animals-game-loaded', this.solution)
+      eventBus.$emit('animal-game-loaded', this.solution)
+      this.loading = false
 
       ////////////////////
     }
@@ -178,6 +188,15 @@ export default {
 
 <style lang="css" scoped>
 
+.game-container {
+  background-color: white;
+  height: 75vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
   .row {
     display: flex;
     flex-wrap: wrap;
