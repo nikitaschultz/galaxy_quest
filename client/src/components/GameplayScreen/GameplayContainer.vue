@@ -41,13 +41,9 @@ export default {
     "continent-select": ContinentSelect,
     "picture-puzzle": PicturePuzzle,
     "win-screen": WinScreen,
-<<<<<<< HEAD
     "sky-screen": SkyScreen,
     // "numbers-game": NumbersGame,
     "animals-game": AnimalsGame
-=======
-    "sky-screen": SkyScreen
->>>>>>> develop
   },
   data(){
     return {
