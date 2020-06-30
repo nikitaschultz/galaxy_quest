@@ -62,7 +62,7 @@ db.planets.insertMany([
         description: "Turn over pictures of animals to find their match.",
         type: "MemoryMatch",
         dataSet: "animals_match"
-      },
+      },{
         name: "Animals of the Planet",
         description: "Without star-light, the animals of Earth are hard to see. Can you help find them?",
         type: "AnimalGame",
