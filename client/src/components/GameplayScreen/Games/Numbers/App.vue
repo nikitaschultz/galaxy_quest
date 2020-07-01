@@ -1,9 +1,9 @@
 <template lang="html">
   <div class="game-container">
-    <button v-if="loading" v-on:click="startGame"> Click to count the ducks </button>
+    <button v-if="loading" v-on:click="loadInstructions"> Click to count the ducks </button>
     <div v-if="!loading">
       <div class = "duck-container" v-if="this.score < 3 && this.lives > 0">
-        <img v-for= "(each,index) in item" src="@/assets/number_game_images/rubber_duck.jpg" width = "120" height = "120" :alt="each" :key="index">
+        <img v-for= "(each,index) in item" src="@/assets/number_game_images/rubber_duck.jpg" width = "90" height = "90" :alt="each" :key="index">
       </div>
       <!-- Check the player's choice with the correct answer -->
       <div class ="guess-buttons-container">
@@ -12,6 +12,8 @@
     </div>
     <!-- if game is still in-play, then  player can have another shot -->
     <div class="another-go-button" v-if="this.score > 0 && this.score < 3 ||   this.lives < 3 && this.lives > 0" >
+    </br>
+    </br>
       <button v-on:click="startGame"> Keep going to win a star! </button>
     </div>
     <!-- Update with the score & lives  -->
@@ -26,8 +28,8 @@
         <button type="button" name="button" v-on:click="gameWon"> Click to claim your star </button>
       </div>
       <div v-if="this.lives === 0">
-        <h3> Bad luck, why not try again ? </h3>
-        <button type="button" name="button" v-on:click="startGame"> Try another game! </button>
+        <h3> Bad luck, why not visit another plant? </h3>
+        <button type="button" name="button" v-on:click="anotherGame"> Try another game! </button>
       </div>
     </div>
   </div>
@@ -59,17 +61,19 @@ export default {
   },
   methods: {
     loadInstructions(){
-      eventBus.$emit('numbers-game-loaded');
+      eventBus.$emit('numbers-game-ready');
       this.loading = false;
       this.startGame();
     },
     startGame(){
       this.loading = false;
-      eventBus.$emit('numbers-game-ready');
       this.number = this.randomNumber();
       this.createItemArray();
       this.createAnswersArray();
       this.shuffleArray(this.answers);
+    },
+    anotherGame(){
+      eventBus.$emit('home-view')
     },
     randomNumber() {
       const randomNumber = Math.floor((Math.random()*20)+1);
@@ -154,7 +158,6 @@ export default {
 }
 
 .another-go-button{
-  align-self: center;
 
 }
 

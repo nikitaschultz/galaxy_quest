@@ -3,9 +3,13 @@
     <h2>Count the Ducks </h2>
     <div v-if="resultPending">
       <div v-if="!ready">
-        <p>We need your help to count the ducks </p>
-        <p>Will you help us?</p>
-        <P> Click on "Keep Going" unti you score 3</p>
+        <p> All the star lights are doing strange things!</p>
+        <p> Ducks keep appearing, can you help us count them ?</p>
+      </div>
+      <div v-if="ready">
+        <p> We need your help to count the ducks! </p>
+        <p> Can you help us?</p>
+        <P> Click "Keep Going" until you score 3</p>
       </div>
     </div>
     <div v-if="!resultPending">
@@ -33,7 +37,7 @@
 </template>
 
 <script>
-import { eventBus } from '../../../main.js';
+import { eventBus } from '@/main.js';
 
 export default {
   name: "numbers-game-instructions",
@@ -47,8 +51,10 @@ export default {
       }
   },
   mounted(){
-    eventBus.$on('numbers-game-loaded')
+    eventBus.$on('numbers-game-ready', () =>{
       this.ready = true;
+    })
+
 
     eventBus.$on('game-won', () => {
       this.resultPending = false;
