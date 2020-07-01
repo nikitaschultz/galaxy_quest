@@ -22,7 +22,14 @@ db.planets.insertMany([
   {
     name: "numbers",
     title: "Numbers Planet",
-    games: []
+    games: [{
+      name: "numbers",
+      title: "Numbers Planet",
+      description: "Test your counting skills to win a star by correctly guessing how many ducks you see!",
+      type: "NumbersGame"
+
+    }
+    ]
   },
   {
     name: "geography",

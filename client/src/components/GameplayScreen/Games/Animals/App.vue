@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {eventBus} from './main.js';
+import {eventBus} from '@/main.js';
 import AnimalGameService from './services/AnimalGameService.js'
 import ProfileService from '@/services/ProfileService.js'
 

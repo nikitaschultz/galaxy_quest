@@ -5,19 +5,21 @@
       <div class="game-instructions" v-if="activeGame">
         <continent-select-instructions v-if="activeGame.type === 'ContinentSelect'" />
         <picture-puzzle-instructions v-if="activeGame.type === 'PicturePuzzle'" />
-      </div>
+      <numbers-game-instructions v-if="activeGame.type === 'NumbersGame'" />
       <sky-screen-instructions v-if="skyScreenStatus" :activeProfile="activeProfile" />
-      <planet-instructions v-if="planetView" :selectedPlanet="selectedPlanet" />
     </div>
+    <planet-instructions v-if="planetView" :selectedPlanet="selectedPlanet" />
     <div class="home-button" v-if="!homeScreenViewInstructions">
       <button type="button" name="button" v-on:click="handleHomeButtonClick">Home</button>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import ContinentSelectInstructions from './GameInstructions/ContinentSelectInstructions.vue';
 import PicturePuzzleInstructions from './GameInstructions/PicturePuzzleInstructions.vue';
+import NumbersGameInstructions from './GameInstructions/NumbersGameInstructions.vue'
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
 import Home from './Home.vue';
@@ -30,6 +32,7 @@ export default {
     "home": Home,
     "continent-select-instructions": ContinentSelectInstructions,
     "picture-puzzle-instructions": PicturePuzzleInstructions,
+    "numbers-game-instructions": NumbersGameInstructions,
     "sky-screen-instructions": SkyScreenInstructions,
     "planet-instructions": PlanetInstructions
   },
