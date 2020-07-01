@@ -1,20 +1,18 @@
 <template lang="html">
   <div class="game-container">
-    <!--  Start the game if the lives = 3 and the score = 0 -->
-    <div>
-      <button v-if="loading && this.lives === 3 && this.score === 0 " v-on:click="startGame"> Click to count the ducks </button>
-    </div>
-    <!-- For each number of random number (1-20) render the same number of ducks -->
-    <div class = "duck-container" v-if="this.score < 3 && this.lives > 0">
-      <img v-for= "(each,index) in item" src="@/assets/number_game_images/rubber_duck.jpg" width = "120" height = "120" :alt="each" :key="index">
-    </div>
-    <!-- Check the player's choice with the correct answer -->
-    <div class ="guess-buttons-container">
-      <button v-for="(answer, index) in answers" :key="index-3" v-on:click="checkAnswer(answer)"> {{answer}} </button>
+    <button v-if="loading" v-on:click="startGame"> Click to count the ducks </button>
+    <div v-if="!loading">
+      <div class = "duck-container" v-if="this.score < 3 && this.lives > 0">
+        <img v-for= "(each,index) in item" src="@/assets/number_game_images/rubber_duck.jpg" width = "120" height = "120" :alt="each" :key="index">
+      </div>
+      <!-- Check the player's choice with the correct answer -->
+      <div class ="guess-buttons-container">
+        <button v-for="(answer, index) in answers" :key="index-3" v-on:click="checkAnswer(answer)"> {{answer}} </button>
+      </div>
     </div>
     <!-- if game is still in-play, then  player can have another shot -->
-    <div class="another-go-button" v-if="this.score > 0 && this.score < 3 || this.lives < 3 && this.lives > 0" >
-      <button v-on:click="startGame"> Click to keep going & win a star! </button>
+    <div class="another-go-button" v-if="this.score > 0 && this.score < 3 ||   this.lives < 3 && this.lives > 0" >
+      <button v-on:click="startGame"> Keep going to win a star! </button>
     </div>
     <!-- Update with the score & lives  -->
     <div class = "scoreboard-container">
@@ -55,18 +53,19 @@ export default {
     }
   },
   mounted(){
-    eventBus.$on('numbers-game-ready',()=> {
+    eventBus.$on('reset-numbers-game-select',()=> {
       this.loading = true;
     })
   },
   methods: {
     loadInstructions(){
-      eventBus.$emit('numbers-game-loaded')
-      this.loading = false
+      eventBus.$emit('numbers-game-loaded');
+      this.loading = false;
+      this.startGame();
     },
     startGame(){
       this.loading = false;
-      eventBus.$emit('numbers-game-ready')
+      eventBus.$emit('numbers-game-ready');
       this.number = this.randomNumber();
       this.createItemArray();
       this.createAnswersArray();
@@ -136,8 +135,9 @@ export default {
 }
 
 .duck-container{
-  justify-content: start;
-  justify-items: center;
+  position: absolute;
+  top: 5px;
+  left: 10px;
 
   }
 

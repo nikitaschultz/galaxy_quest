@@ -1,30 +1,29 @@
 <template lang="html">
-  <div class="game-instructions">
+  <div class="numbers-game-instructions">
     <h2>Count the Ducks </h2>
     <div v-if="resultPending">
       <div v-if="!ready">
         <p>We need your help to count the ducks </p>
         <p>Will you help us?</p>
+        <P> Click on "Keep Going" unti you score 3</p>
       </div>
     </div>
     <div v-if="!resultPending">
       <div v-if="!attemptsExhausted">
         <div v-if="gameWon">
-          <p>Hooray!  We found it!</p>
+          <p>Hooray! You've counted all the ducks!</p>
           <p>Thank you explorer!</p>
           <p>Please take this star with you as a token of our gratitude!</p>
         </div>
         <div v-if="!gameWon">
           <p>Oh no!  We can't find the star!</p>
-          <p>That was the wrong continent.</p>
-          <p>The star is in {{ correctAnswer }}.</p>
+          <p>Please try again & count all the ducks.</p>
           <p>Would you like to try again?</p>
           <button v-on:click="resetGame" name="button">Try Again</button>
         </div>
       </div>
       <div v-if="attemptsExhausted">
-        <p>We couldn't find the star.</p>
-        <p>It fell in {{ correctAnswer }} which is the {{ colourCodes[correctAnswer] }} continent on the map.</p>
+        <p>We couldn't count all the ducks to find a star.</p>
         <p>We'll find it next time!</p>
         <p>Would you like to play again?</p>
         <button name="reset-game" v-on:click="playAgain">Play Again</button>
@@ -40,7 +39,6 @@ export default {
   name: "numbers-game-instructions",
   data(){
     return {
-      correctAnswer: "",
       ready: false,
       resultPending: true,
       gameWon: false,
