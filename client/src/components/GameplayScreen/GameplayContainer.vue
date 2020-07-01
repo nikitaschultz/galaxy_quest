@@ -26,7 +26,7 @@ import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
 import PicturePuzzle from './Games/PicturePuzzle.vue';
 import MemoryMatch from './Games/MemoryMatch.vue';
-import NumbersGame from './Games/Numbers/App.vue';
+import NumbersGame from './Games/NumbersGame.vue';
 import AnimalsGame from './Games/AnimalGame.vue'
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';

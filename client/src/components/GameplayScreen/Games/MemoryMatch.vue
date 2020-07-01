@@ -73,7 +73,7 @@ export default {
           let tempSelected = this.selectedCard;
           this.selectedCard = null;
           setTimeout(() => {
-            tempSelected.inPlay = false;
+            tempSelected .inPlay = false;
             card.inPlay = false;
             this.checkForWin();
             eventBus.$emit('memory-match-made', card)
