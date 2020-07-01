@@ -1,16 +1,11 @@
 <template lang="html">
   <div class="game-container">
-    <div>
-    <button v-if="loading" v-on:click="loadInstructions" name="start-game" class="start-game-button">Let's Go!</button>
-  </div>
+
+    <button v-if="loading" v-on:click="loadInstructions" type="button" name="button">Let's Go!</button>
 
     <div v-if="!loading && animalObjects" class="row">
-      <div class="question-column">
-        <!-- <h3 v-if="this.selectedAnswer != this.solution">Where is the {{this.solution}}?</h3>
-        <p v-if="this.selectedAnswer === this.solution">Well done! You found the {{this.solution}}!</p> -->
-      </div>
       <div class="column">
-        <!-- <p> Remaining lives : {{this.playerLives}}</p> -->
+        <p> Remaining lives : {{this.playerLives}}</p>
         <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
         <img v-if="showImage[0]" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
         <img v-if="!showImage[1]" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
@@ -22,22 +17,22 @@
         <img v-if="!showImage[3]" v-bind:src="imageFourShadow" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
         <img v-if="showImage[3]" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
       </div>
-      <!-- <div class="column">
-        <p v-if="this.selectedAnswer != this.solution">Where is the {{this.solution}}?</p>
-        <p v-if="this.selectedAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
-      </div> -->
       <div class="column">
-        <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button> -->
-        <!-- <button v-if="this.selectedAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button> -->
-        <!-- <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button> -->
-        <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button> -->
+        <p v-if="this.playerAnswer != this.solution">Where is the {{this.solution}}?</p>
+        <p v-if="this.playerAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
+      </div>
+      <div class="column">
+        <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
+        <button v-if="this.playerAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
+        <button v-if="this.playerAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="winnerGameOver">Finish</button>
+        <button v-if="this.playerAnswer && this.playerAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {eventBus} from '@/main.js';
+import {eventBus} from './main.js';
 import AnimalGameService from '@/services/AnimalGameService.js'
 import ProfileService from '@/services/ProfileService.js'
 
@@ -46,12 +41,16 @@ export default {
   props: ["activeProfile"],
   data(){
     return {
-      // loading
+      //Loading screen defaults as true
       loading: true,
       // result of mounted fetch
       animalObjects: null,
       // the players answer
-      selectedAnswer: "",
+      playerAnswer: "",
+      /// round counter
+      gameRound: 1,
+      /// lives counter
+      playerLives: 3,
       /// hash tag picture logic
       showImage: [false,false,false,false]
     }
@@ -59,12 +58,7 @@ export default {
 
   mounted(){
     this.fetchGameData();
-
-    eventBus.$on('reset-animalGame-select', () => {
-      this.loading = true;
-      this.handleNextRound();
-  })
-},
+  },
 
   methods: {
     fetchGameData(){
@@ -92,58 +86,39 @@ export default {
     /////Game logic ////
 
     handleClickOne(){
-      if(!this.selectedAnswer){
-        this.selectedAnswer = this.animalObjects[0].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[0].name;
         this.showImage[0] = true;
-        if(this.selectedAnswer === this.solution){
-          eventBus.$emit('round-won')
-        } else {
-          eventBus.$emit('game-lost')
-        }
       }
     },
     handleClickTwo(){
-      if(!this.selectedAnswer){
-        this.selectedAnswer = this.animalObjects[1].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[1].name;
         this.showImage[1] = true;
-        if(this.selectedAnswer === this.solution){
-          eventBus.$emit('round-won')
-        } else {
-          eventBus.$emit('game-lost')
-        }
       }
     },
     handleClickThree(){
-      if(!this.selectedAnswer){
-        this.selectedAnswer = this.animalObjects[2].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[2].name;
         this.showImage[2] = true;
-        if(this.selectedAnswer === this.solution){
-          eventBus.$emit('round-won')
-        } else {
-          eventBus.$emit('game-lost')
-        }
       }
     },
     handleClickFour(){
-      if(!this.selectedAnswer){
-        this.selectedAnswer = this.animalObjects[3].name;
+      if(!this.playerAnswer){
+        this.playerAnswer = this.animalObjects[3].name;
         this.showImage[3] = true;
-        if(this.selectedAnswer === this.solution){
-          eventBus.$emit('round-won')
-        } else {
-          eventBus.$emit('game-lost')
-        }
       }
     },
     handleTryAgain(){
-      this.selectedAnswer = "";
+      this.playerAnswer = "";
       this.playerLives --;
       this.showImage.forEach((item,index) => {
         this.showImage[index] = false;
       });
     },
     handleNextRound(){
-      this.selectedAnswer = "";
+      this.gameRound ++;
+      this.playerAnswer = "";
       this.showImage.forEach((item,index) => {
         this.showImage[index] = false;
       });
@@ -152,18 +127,27 @@ export default {
 
     ///// WIN STATE /////
 
-    // handleGameOver(){
-    //   if(this.selectedAnswer === this.solution){
-    //     eventBus.$emit('game-won')
-    //   }else{
-    //     eventBus.$emit('game-lost')
-    //   }
-    // },
+    winnerGameOver(){
+      // If Win-Con is met
+      if (this.playerAnswer === this.solution && this.gameRound === 3){
+        // Update players profile
+        let id = this.activeProfile._id
+        let playerData = {
+
+          starPoints: this.activeProfile.starPoints ++,
+          completedGames: [{
+            gameID: id,
+            completed: true
+          }]
+        }
+        ProfileService.updateProfile(id, playerData)
+      }
+    },
 
     // Game loading screen
     loadInstructions(){
-      eventBus.$emit('animal-game-loaded', this.solution)
-      this.loading = false
+      eventBus.$emit('animals-game-loaded', this.solution)
+      this.loading = false;
 
       ////////////////////
     }
@@ -205,44 +189,21 @@ export default {
 
 <style lang="css" scoped>
 
-.game-container {
-  background-color: white;
-  height: 75vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
   .row {
     display: flex;
     flex-wrap: wrap;
     padding: 0 4px;
-    justify-content: center;
-    align-items: center;
   }
 
   /* Create two equal columns that sits next to each other */
   .column {
     flex: 50%;
     padding: 0 4px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
   }
 
   .column img {
     margin-top: 8px;
     vertical-align: middle;
-  }
-
-  .question-column {
-    flex: 50%;
-    padding: 0 4px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 0 0 30px 0;
   }
 
 </style>
