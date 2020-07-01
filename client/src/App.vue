@@ -97,6 +97,10 @@ export default {
         planet.isSelected = false;
       })
       planet.isSelected = true;
+      if(this.selectedPlanet){
+        document.getElementById(this.selectedPlanet.name).classList.remove('selected-planet');
+      };
+      document.getElementById(planet.name).classList.add('selected-planet');
       this.selectedPlanet = planet;
       this.planetView = true;
     })
