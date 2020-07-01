@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="game-instructions">
-    <h2>Where is he ?</h2>
+    <h2>Who's there ?</h2>
     <div v-if="resultPending">
       <div v-if="!ready">
         <p>Oh no! It's so dark here!</p>

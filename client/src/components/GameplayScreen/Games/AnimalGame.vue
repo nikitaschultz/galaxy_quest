@@ -144,7 +144,7 @@ export default {
 
     // Game loading screen
     loadInstructions(){
-      eventBus.$emit('animals-game-loaded', this.solution)
+      eventBus.$emit('animal-game-loaded', this.solution)
       this.loading = false
 
       ////////////////////
