@@ -3,6 +3,7 @@
     <div class="stars">
       <div v-if="!gameWinStatus">
         <div class="games" v-if="activeGame">
+          <numbers-game v-if="activeGame.type === 'NumbersGame'"/>
           <continent-select v-if="activeGame.type === 'ContinentSelect'" />
           <picture-puzzle v-if="activeGame.type === 'PicturePuzzle'" />
           <memory-match v-if="activeGame.type === 'MemoryMatch'" />
@@ -25,9 +26,8 @@ import { eventBus } from '../../main.js';
 import ContinentSelect from './Games/ContinentSelect.vue';
 import PicturePuzzle from './Games/PicturePuzzle.vue';
 import MemoryMatch from './Games/MemoryMatch.vue';
-// Keith and Luke
+import NumbersGame from './Games/Numbers/App.vue';
 import AnimalsGame from './Games/AnimalGame.vue'
-// import NumbersGame from './Games/Numbers/app.vue'
 import WinScreen from './WinScreen.vue';
 import SkyScreen from './SkyScreen.vue';
 
@@ -41,7 +41,7 @@ export default {
     "memory-match": MemoryMatch,
     "win-screen": WinScreen,
     "sky-screen": SkyScreen,
-    // "numbers-game": NumbersGame,
+    "numbers-game": NumbersGame,
     "animals-game": AnimalsGame
   },
   data(){

@@ -10,7 +10,9 @@
     "mongodb": "^3.5.9",
     "nodemon": "^2.0.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "case-sensitive-paths-webpack-plugin": "^2.3.0"
+  },
   "scripts": {
     "server:dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",

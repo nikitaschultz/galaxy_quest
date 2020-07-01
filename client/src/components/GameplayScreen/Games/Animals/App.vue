@@ -32,8 +32,13 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+import {eventBus} from '@/main.js';
+import AnimalGameService from './services/AnimalGameService.js'
+=======
 import {eventBus} from './main.js';
 import AnimalGameService from '@/services/AnimalGameService.js'
+>>>>>>> develop
 import ProfileService from '@/services/ProfileService.js'
 
 export default {

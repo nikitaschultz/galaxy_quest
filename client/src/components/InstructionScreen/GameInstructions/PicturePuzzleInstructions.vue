@@ -22,7 +22,7 @@
         <p>Hooray!  You put the pieces back together!</p><br>
         <p>Thank you explorer!</p><br>
         <p>Amongst the pieces we found this star!</p><br>
-        <p>Please take it as a token of our grattitude!</p>
+        <p>Please take it as a token of our gratitude!</p>
       </div>
     </div>
   </div>
