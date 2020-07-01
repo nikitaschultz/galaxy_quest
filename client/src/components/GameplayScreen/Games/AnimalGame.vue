@@ -6,8 +6,8 @@
 
     <div v-if="!loading && animalObjects" class="row">
       <div class="question-column">
-        <h3 v-if="this.selectedAnswer != this.solution">Where is the {{this.solution}}?</h3>
-        <p v-if="this.selectedAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
+        <!-- <h3 v-if="this.selectedAnswer != this.solution">Where is the {{this.solution}}?</h3>
+        <p v-if="this.selectedAnswer === this.solution">Well done! You found the {{this.solution}}!</p> -->
       </div>
       <div class="column">
         <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
@@ -28,7 +28,7 @@
       <div class="column">
         <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button> -->
         <!-- <button v-if="this.selectedAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button> -->
-        <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button>
+        <!-- <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button> -->
         <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button> -->
       </div>
     </div>
