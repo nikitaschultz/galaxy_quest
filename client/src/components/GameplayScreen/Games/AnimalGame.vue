@@ -21,21 +21,21 @@
         <img v-if="!showImage[3]" v-bind:src="imageFourShadow" v-bind:name="this.animalObjects[3].name" v-on:click="handleClickFour">
         <img v-if="showImage[3]" v-bind:src="imageFour" v-bind:name="this.animalObjects[3].name">
       </div>
+      <!-- <div class="column">
+        <p v-if="this.selectedAnswer != this.solution">Where is the {{this.solution}}?</p>
+        <p v-if="this.selectedAnswer === this.solution">Well done! You found the {{this.solution}}!</p>
+      </div> -->
       <div class="column">
-        <p> Remaining lives : {{this.playerLives}}</p>
-      </div>
-      <div class="column">
-        <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button>
-        <button v-if="this.selectedAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button>
+        <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button> -->
+        <!-- <button v-if="this.selectedAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button> -->
         <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button>
-        <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button>
+        <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import {eventBus} from '@/main.js';
 import AnimalGameService from '@/services/AnimalGameService.js'
 import ProfileService from '@/services/ProfileService.js'
@@ -99,24 +99,36 @@ export default {
       if(!this.selectedAnswer){
         this.selectedAnswer = this.animalObjects[0].name;
         this.showImage[0] = true;
+        if(this.selectedAnswer === this.solution){
+          eventBus.$emit('round-won')
+        }
       }
     },
     handleClickTwo(){
       if(!this.selectedAnswer){
         this.selectedAnswer = this.animalObjects[1].name;
         this.showImage[1] = true;
+        if(this.selectedAnswer === this.solution){
+          eventBus.$emit('round-won')
+        }
       }
     },
     handleClickThree(){
       if(!this.selectedAnswer){
         this.selectedAnswer = this.animalObjects[2].name;
         this.showImage[2] = true;
+        if(this.selectedAnswer === this.solution){
+          eventBus.$emit('round-won')
+        }
       }
     },
     handleClickFour(){
       if(!this.selectedAnswer){
         this.selectedAnswer = this.animalObjects[3].name;
         this.showImage[3] = true;
+        if(this.selectedAnswer === this.solution){
+          eventBus.$emit('round-won')
+        }
       }
     },
     handleTryAgain(){
@@ -147,7 +159,7 @@ export default {
 
     // Game loading screen
     loadInstructions(){
-      eventBus.$emit('animals-game-loaded', this.solution)
+      eventBus.$emit('animal-game-loaded', this.solution)
       this.loading = false
 
       ////////////////////
