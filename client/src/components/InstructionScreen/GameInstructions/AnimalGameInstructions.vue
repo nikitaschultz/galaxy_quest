@@ -14,12 +14,21 @@
     </div>
     <div v-if="!resultPending">
       <div v-if="!attemptsExhausted">
+
+        <div v-if="roundWon">
+          <p>Hooray!  We found the {{correctAnswer}}!</p>
+          <p>Keep going and we will try to find the others!</p>
+          <button  v-on:click="playAgain" name="button">Next Round</button>
+        </div>
+
         <div v-if="gameWon">
           <p>Hooray!  We found them!</p>
           <p>Thank you explorer!</p>
           <p>Please take this star with you as a token of our gratitude!</p>
         </div>
-        <div v-if="!gameWon">
+
+
+        <div v-if="!gameWon && !roundWon">
           <p>Oh no!  We can't find the star!</p>
           <p>That was the wrong continent.</p>
           <p>The star is in {{ correctAnswer }}.</p>
@@ -48,7 +57,9 @@ export default {
       correctAnswer: "",
       ready: false,
       resultPending: true,
+      roundWon: false,
       gameWon: false,
+      rounds: 0,
       attempts: 0,
       attemptsExhausted: false,
     }
@@ -57,6 +68,16 @@ export default {
     eventBus.$on('animal-game-loaded', (correctAnswer) => {
       this.correctAnswer = correctAnswer;
       this.ready = true;
+    })
+
+    eventBus.$on('round-won', () => {
+      this.rounds ++;
+      if(this.rounds == 3){
+        eventBus.$emit('game-won')
+      }else{
+      this.resultPending = false;
+      this.roundWon = true;
+    }
     })
 
     eventBus.$on('game-won', () => {
@@ -75,6 +96,7 @@ export default {
   methods: {
     resetGame(){
       this.gameWon = false;
+      this.roundWon = false;
       this.resultPending = true;
     },
     playAgain(){
