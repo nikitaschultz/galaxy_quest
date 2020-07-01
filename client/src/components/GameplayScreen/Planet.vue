@@ -1,6 +1,6 @@
 <template lang="html">
-  <div v-bind:class="isSelected" v-on:click="handleSelectPlanet" >
-    <img :src="planetSRC" :alt="planet.name" width="80px" :class="planet.name">
+  <div v-on:click="handleSelectPlanet" class="planet">
+    <img :src="planetSRC" :alt="planet.name" width="80px" :id="planet.name">
   </div>
 </template>
 
@@ -13,14 +13,11 @@ export default {
   computed: {
     planetSRC(){
       return require("@/assets/" + this.planet.name + ".png")
-    },
-    isSelected(){
-      return this.planet.isSelected ? "selected-planet" : "planet"
     }
   },
   methods: {
-    handleSelectPlanet(){
-      eventBus.$emit('planet-selected', this.planet)
+    handleSelectPlanet(event){
+      eventBus.$emit('planet-selected', this.planet);
     }
   }
 }
@@ -28,25 +25,48 @@ export default {
 
 <style lang="css" scoped>
 
-  .geography {
-    margin: 10vh 6.5vw;
+  #geography {
+    margin: 20vh 6.5vw;
+
+    -webkit-animation: myOrbit1 9s linear infinite;
   }
 
-  .animals {
+  #animals {
     margin: 50vh 6.5vw;
+
+    -webkit-animation: myOrbit2 7.5s linear infinite;
   }
 
-  .numbers {
-    margin: 30vh 6.5vw;
+  #numbers {
+    margin: 40vh 6.5vw;
+
+    -webkit-animation: myOrbit3 6s linear infinite;
   }
 
-  .planet:hover {
+  .planet:hover, .selected-planet:hover {
     filter: drop-shadow(0 0 10px gold);
   }
 
   .selected-planet {
     filter: drop-shadow(0 0 10px gold);
   }
+
+
+  @-webkit-keyframes myOrbit1 {
+    from { -webkit-transform: rotate(0deg) translateX(40px) rotate(0deg); }
+    to   { -webkit-transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+  }
+
+  @-webkit-keyframes myOrbit2 {
+    from { -webkit-transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+    to   { -webkit-transform: rotate(0deg) translateX(40px) rotate(-0deg); }
+  }
+
+  @-webkit-keyframes myOrbit3 {
+    from { -webkit-transform: rotate(180deg) translateX(50px) rotate(-180deg); }
+    to   { -webkit-transform: rotate(-180deg) translateX(50px) rotate(180deg); }
+  }
+
 
 
 </style>

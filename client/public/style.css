@@ -18,7 +18,7 @@ h4 {
   font-size: 25px;
 }
 
-p {
+p, label {
   font-size: 25px;
   font-family: 'Boogaloo', cursive;
   color: black;
@@ -30,7 +30,7 @@ h2, h3, h4 {
   margin: 15px 0;
 }
 
-button {
+button, .button {
   font-family: 'Boogaloo', cursive;
   font-weight: bold;
   font-size: 25px;
@@ -44,7 +44,7 @@ button {
   margin: 0px 5px 0px 5px
 }
 
-button:hover {
+button:hover, .button:hover {
   color: #003399;
   background-color: white;
 }
@@ -64,7 +64,7 @@ body {
   padding: 0 10px;
 }
 
-.play-game-button {
+.play-game-button, .edit-button {
   background-color: orangered;
   border: 1px solid orangered;
   width: 80px;
@@ -72,7 +72,7 @@ body {
   font-size: 20px;
 }
 
-  .play-game-button:hover {
+.play-game-button:hover, .edit-button:hover {
   color: orangered;
   background-color: white;
 }

@@ -5,7 +5,10 @@
       <div class="game-instructions" v-if="activeGame">
         <continent-select-instructions v-if="activeGame.type === 'ContinentSelect'" />
         <picture-puzzle-instructions v-if="activeGame.type === 'PicturePuzzle'" />
-      <numbers-game-instructions v-if="activeGame.type === 'NumbersGame'" />
+        <number-game-instructions v-if="activeGame.type === 'NumberGame'" />
+        <animal-game-instructions v-if="activeGame.type === 'AnimalGame'" />
+        <memory-match-instructions v-if="activeGame.type === 'MemoryMatch'" />
+      </div>
       <sky-screen-instructions v-if="skyScreenStatus" :activeProfile="activeProfile" />
     </div>
     <planet-instructions v-if="planetView" :selectedPlanet="selectedPlanet" />
@@ -19,9 +22,15 @@
 <script>
 import ContinentSelectInstructions from './GameInstructions/ContinentSelectInstructions.vue';
 import PicturePuzzleInstructions from './GameInstructions/PicturePuzzleInstructions.vue';
-import NumbersGameInstructions from './GameInstructions/NumbersGameInstructions.vue'
+import MemoryMatchInstructions from './GameInstructions/MemoryMatchInstructions.vue';
+import NumbersGameInstructions from './GameInstructions/NumbersGameInstructions.vue';
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
+
+// LUKE RENDER INSTRUCTIONS //
+import AnimalGameInstructions from './GameInstructions/AnimalGameInstructions.vue'
+//                                   //
+
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
 
@@ -32,9 +41,11 @@ export default {
     "home": Home,
     "continent-select-instructions": ContinentSelectInstructions,
     "picture-puzzle-instructions": PicturePuzzleInstructions,
+    "memory-match-instructions": MemoryMatchInstructions,
     "numbers-game-instructions": NumbersGameInstructions,
     "sky-screen-instructions": SkyScreenInstructions,
-    "planet-instructions": PlanetInstructions
+    "planet-instructions": PlanetInstructions,
+    "animal-game-instructions": AnimalGameInstructions
   },
   methods: {
     handleHomeButtonClick(){
