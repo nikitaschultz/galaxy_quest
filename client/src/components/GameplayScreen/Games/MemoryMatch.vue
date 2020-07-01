@@ -97,7 +97,6 @@ export default {
 
       if(gameWin){
         eventBus.$emit('game-won')
-        console.log("winner!!");
       }
     },
     shuffleArray(array){

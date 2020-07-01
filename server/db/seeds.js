@@ -6,13 +6,51 @@ db.profiles.insertMany([
     name: "Sully",
     avatar: "avatar3",
     starPoints: 2,
-    completedGames: [],
-    starCoordinates: []
-  },
+    completedGames: ["Memory Match", "World Landmarks"],
+    starCoordinates: [{
+      "relX": 0.12300683371298406,
+      "relY": 0.14524207011686144
+    },
+    {
+      "relX": 0.8485193621867881,
+      "relY": 0.09348914858096828
+    },
+    {
+      "relX": 0.7471526195899773,
+      "relY": 0.46410684474123537
+    },
+    {
+      "relX": 0.3929384965831435,
+      "relY": 0.2888146911519199
+    },
+    {
+      "relX": 0.14009111617312073,
+      "relY": 0.7412353923205343
+    },
+    {
+      "relX": 0.5820045558086561,
+      "relY": 0.7479131886477463
+    },
+    {
+      "relX": 0.9179954441913439,
+      "relY": 0.4023372287145242
+    },
+    {
+      "relX": 0.8895216400911162,
+      "relY": 0.8631051752921536
+    },
+    {
+      "relX": 0.30637813211845105,
+      "relY": 0.5058430717863105
+    },
+    {
+      "relX": 0.3895216400911162,
+      "relY": 0.7562604340567612
+    }]},
   {
     name: "Boo",
     avatar: "avatar4",
-    starPoints: 7,
+    starPoints: 0,
     completedGames: [],
     starCoordinates: []
   }
