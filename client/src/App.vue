@@ -94,6 +94,8 @@ export default {
       this.gameWinStatus = false;
       this.planetView = false;
       this.activeGame = null;
+      document.getElementById(this.selectedPlanet.name).classList.remove('selected-planet');
+      this.selectedPlanet = null;
     })
 
     eventBus.$on('planet-selected', (planet) => {
