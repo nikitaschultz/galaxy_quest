@@ -16,7 +16,7 @@
   - (Initially, the admin password is set to "password" - this can be changed in the Admin screen"
 
 ## Playing Games
-- Games are located within the Planets - each Plane has a theme
+- Games are located within the Planets - each Planet has a theme
 - Playing games earns you star points which you can use to add stars to your sky from the Home screen
 - The first time you beat a game, you earn three stars 
 - Each time you beat a game thereafter, you earn one star
