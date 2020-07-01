@@ -6,7 +6,7 @@
 
     <div v-if="!loading && animalObjects" class="row">
       <div class="column">
-        <p> Remaining lives : {{this.playerLives}}</p>
+        <!-- <p> Remaining lives : {{this.playerLives}}</p> -->
         <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
         <img v-if="showImage[0]" v-bind:src="imageOne" v-bind:name="this.animalObjects[0].name">
         <img v-if="!showImage[1]" v-bind:src="imageTwoShadow" v-bind:name="this.animalObjects[1].name" v-on:click="handleClickTwo">
@@ -48,10 +48,6 @@ export default {
       animalObjects: null,
       // the players answer
       selectedAnswer: "",
-      /// round counter
-      gameRound: 1,
-      /// lives counter
-      playerLives: 3,
       /// hash tag picture logic
       showImage: [false,false,false,false]
     }
@@ -59,7 +55,6 @@ export default {
 
   mounted(){
     this.fetchGameData();
-
 
     eventBus.$on('reset-animalGame-select', () => {
       this.loading = true;
@@ -98,6 +93,8 @@ export default {
         this.showImage[0] = true;
         if(this.selectedAnswer === this.solution){
           eventBus.$emit('round-won')
+        } else {
+          eventBus.$emit('game-lost')
         }
       }
     },
@@ -107,6 +104,8 @@ export default {
         this.showImage[1] = true;
         if(this.selectedAnswer === this.solution){
           eventBus.$emit('round-won')
+        } else {
+          eventBus.$emit('game-lost')
         }
       }
     },
@@ -116,6 +115,8 @@ export default {
         this.showImage[2] = true;
         if(this.selectedAnswer === this.solution){
           eventBus.$emit('round-won')
+        } else {
+          eventBus.$emit('game-lost')
         }
       }
     },
@@ -125,6 +126,8 @@ export default {
         this.showImage[3] = true;
         if(this.selectedAnswer === this.solution){
           eventBus.$emit('round-won')
+        } else {
+          eventBus.$emit('game-lost')
         }
       }
     },
@@ -136,7 +139,6 @@ export default {
       });
     },
     handleNextRound(){
-      this.gameRound ++;
       this.selectedAnswer = "";
       this.showImage.forEach((item,index) => {
         this.showImage[index] = false;
@@ -146,13 +148,13 @@ export default {
 
     ///// WIN STATE /////
 
-    handleGameOver(){
-      if(this.selectedAnswer === this.solution){
-        eventBus.$emit('game-won')
-      }else{
-        eventBus.$emit('game-lost')
-      }
-    },
+    // handleGameOver(){
+    //   if(this.selectedAnswer === this.solution){
+    //     eventBus.$emit('game-won')
+    //   }else{
+    //     eventBus.$emit('game-lost')
+    //   }
+    // },
 
     // Game loading screen
     loadInstructions(){

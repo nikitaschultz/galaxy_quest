@@ -29,10 +29,8 @@
 
 
         <div v-if="!gameWon && !roundWon">
-          <p>Oh no!  We can't find the star!</p>
-          <p>That was the wrong continent.</p>
-          <p>The star is in {{ correctAnswer }}.</p>
-          <p>Would you like to try again?</p>
+          <p>Oh no!  We can't find the {{ correctAnswer }}!</p>
+          <p>Lets see who else we can find</p>
           <button v-on:click="resetGame" name="button">Try Again</button>
         </div>
       </div>
@@ -40,8 +38,6 @@
         <p>We couldn't find the {{correctAnswer}}.</p>
         <p>Looks like it was too hidden.</p>
         <p>We'll find it next time!</p>
-        <p>Would you like to play again?</p>
-        <button name="reset-game" v-on:click="playAgain">Play Again</button>
       </div>
     </div>
   </div>
@@ -89,6 +85,8 @@ export default {
       this.attempts += 1;
       if(this.attempts > 2){
         this.attemptsExhausted = true;
+        this.rounds= 0;
+        this.attempts=0;
       }
       this.resultPending = false;
     })
@@ -98,6 +96,7 @@ export default {
       this.gameWon = false;
       this.roundWon = false;
       this.resultPending = true;
+      eventBus.$emit('reset-animalGame-select')
     },
     playAgain(){
       this.resetGame();
