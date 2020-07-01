@@ -26,10 +26,7 @@ import MemoryMatchInstructions from './GameInstructions/MemoryMatchInstructions.
 import NumbersGameInstructions from './GameInstructions/NumbersGameInstructions.vue';
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
-
-// LUKE RENDER INSTRUCTIONS //
 import AnimalGameInstructions from './GameInstructions/AnimalGameInstructions.vue'
-//                                   //
 
 import Home from './Home.vue';
 import { eventBus } from '../../main.js';
@@ -65,7 +62,6 @@ export default {
     box-shadow: 0 0 30px cornflowerblue;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
 
   .home-button {
