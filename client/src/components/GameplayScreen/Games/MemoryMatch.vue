@@ -70,19 +70,21 @@ export default {
       }else{
         if(this.selectedCard.name === card.name){
           card.isSelected = true;
+          let tempSelected = this.selectedCard;
+          this.selectedCard = null;
           setTimeout(() => {
-            this.selectedCard.inPlay = false;
+            tempSelected .inPlay = false;
             card.inPlay = false;
-            this.selectedCard = null;
             this.checkForWin();
             eventBus.$emit('memory-match-made', card)
           }, 1000)
         }else{
           card.isSelected = true;
+          let tempSelected = this.selectedCard;
+          this.selectedCard = null;
           setTimeout(() => {
-            this.selectedCard.isSelected = false;
+            tempSelected.isSelected = false;
             card.isSelected = false;
-            this.selectedCard = null;
             this.checkForWin();
           }, 1500);
         }
