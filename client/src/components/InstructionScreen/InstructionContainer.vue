@@ -10,18 +10,20 @@
         <memory-match-instructions v-if="activeGame.type === 'MemoryMatch'" />
       </div>
       <sky-screen-instructions v-if="skyScreenStatus" :activeProfile="activeProfile" />
-      <planet-instructions v-if="planetView" :selectedPlanet="selectedPlanet" />
     </div>
+    <planet-instructions v-if="planetView" :selectedPlanet="selectedPlanet" />
     <div class="home-button" v-if="!homeScreenViewInstructions">
       <button type="button" name="button" v-on:click="handleHomeButtonClick">Home</button>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import ContinentSelectInstructions from './GameInstructions/ContinentSelectInstructions.vue';
 import PicturePuzzleInstructions from './GameInstructions/PicturePuzzleInstructions.vue';
 import MemoryMatchInstructions from './GameInstructions/MemoryMatchInstructions.vue';
+import NumbersGameInstructions from './GameInstructions/NumbersGameInstructions.vue';
 import SkyScreenInstructions from './SkyScreenInstructions.vue';
 import PlanetInstructions from './PlanetInstructions.vue';
 
@@ -40,6 +42,7 @@ export default {
     "continent-select-instructions": ContinentSelectInstructions,
     "picture-puzzle-instructions": PicturePuzzleInstructions,
     "memory-match-instructions": MemoryMatchInstructions,
+    "numbers-game-instructions": NumbersGameInstructions,
     "sky-screen-instructions": SkyScreenInstructions,
     "planet-instructions": PlanetInstructions,
     "animal-game-instructions": AnimalGameInstructions
