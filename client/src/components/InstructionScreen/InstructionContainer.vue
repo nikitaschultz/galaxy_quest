@@ -66,8 +66,10 @@ export default {
 
   .home-button {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    height: 100%;
+    margin: 10px;
   }
 
 </style>
