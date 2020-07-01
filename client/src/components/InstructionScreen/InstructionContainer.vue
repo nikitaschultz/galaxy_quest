@@ -5,7 +5,7 @@
       <div class="game-instructions" v-if="activeGame">
         <continent-select-instructions v-if="activeGame.type === 'ContinentSelect'" />
         <picture-puzzle-instructions v-if="activeGame.type === 'PicturePuzzle'" />
-        <number-game-instructions v-if="activeGame.type === 'NumberGame'" />
+        <numbers-game-instructions v-if="activeGame.type === 'NumbersGame'" />
         <animal-game-instructions v-if="activeGame.type === 'AnimalGame'" />
         <memory-match-instructions v-if="activeGame.type === 'MemoryMatch'" />
       </div>
