@@ -15,7 +15,7 @@
     <div v-if="!resultPending">
       <div v-if="!attemptsExhausted">
 
-        <div v-if="roundWon">
+        <div v-if="roundWon && !gameWon">
           <p>Hooray!  We found the {{correctAnswer}}!</p>
           <p>Keep going and we will try to find the others!</p>
           <button  v-on:click="playAgain" name="button">Next Round</button>
@@ -29,10 +29,8 @@
 
 
         <div v-if="!gameWon && !roundWon">
-          <p>Oh no!  We can't find the star!</p>
-          <p>That was the wrong continent.</p>
-          <p>The star is in {{ correctAnswer }}.</p>
-          <p>Would you like to try again?</p>
+          <p>Oh no!  We can't find the {{ correctAnswer }}!</p>
+          <p>Lets see who else we can find</p>
           <button v-on:click="resetGame" name="button">Try Again</button>
         </div>
       </div>
@@ -40,8 +38,6 @@
         <p>We couldn't find the {{correctAnswer}}.</p>
         <p>Looks like it was too hidden.</p>
         <p>We'll find it next time!</p>
-        <p>Would you like to play again?</p>
-        <button name="reset-game" v-on:click="playAgain">Play Again</button>
       </div>
     </div>
   </div>
@@ -82,6 +78,8 @@ export default {
 
     eventBus.$on('game-won', () => {
       this.resultPending = false;
+      this.rounds= 0;
+      this.attempts=0;
       this.gameWon = true;
     })
 
@@ -89,6 +87,8 @@ export default {
       this.attempts += 1;
       if(this.attempts > 2){
         this.attemptsExhausted = true;
+        this.rounds= 0;
+        this.attempts=0;
       }
       this.resultPending = false;
     })
@@ -98,10 +98,10 @@ export default {
       this.gameWon = false;
       this.roundWon = false;
       this.resultPending = true;
+      eventBus.$emit('reset-animalGame-select')
     },
     playAgain(){
       this.resetGame();
-      this.attempts = 0;
       this.ready = false;
       eventBus.$emit('reset-animalGame-select')
     }
