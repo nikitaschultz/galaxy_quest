@@ -15,7 +15,7 @@
     <div v-if="!resultPending">
       <div v-if="!attemptsExhausted">
 
-        <div v-if="roundWon">
+        <div v-if="roundWon && !gameWon">
           <p>Hooray!  We found the {{correctAnswer}}!</p>
           <p>Keep going and we will try to find the others!</p>
           <button  v-on:click="playAgain" name="button">Next Round</button>
@@ -78,6 +78,8 @@ export default {
 
     eventBus.$on('game-won', () => {
       this.resultPending = false;
+      this.rounds= 0;
+      this.attempts=0;
       this.gameWon = true;
     })
 
@@ -100,7 +102,6 @@ export default {
     },
     playAgain(){
       this.resetGame();
-      this.attempts = 0;
       this.ready = false;
       eventBus.$emit('reset-animalGame-select')
     }

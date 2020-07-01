@@ -5,10 +5,6 @@
   </div>
 
     <div v-if="!loading && animalObjects" class="row">
-      <div class="question-column">
-        <!-- <h3 v-if="this.selectedAnswer != this.solution">Where is the {{this.solution}}?</h3>
-        <p v-if="this.selectedAnswer === this.solution">Well done! You found the {{this.solution}}!</p> -->
-      </div>
       <div class="column">
         <!-- <p> Remaining lives : {{this.playerLives}}</p> -->
         <img v-if="!showImage[0]" v-bind:src="imageOneShadow" v-bind:name="this.animalObjects[0].name" v-on:click="handleClickOne">
@@ -29,7 +25,7 @@
       <div class="column">
         <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives != 0" type="button" name="button" v-on:click="handleTryAgain">Try Again</button> -->
         <!-- <button v-if="this.selectedAnswer === this.solution && this.gameRound != 3" type="button" name="button" v-on:click="handleNextRound">Next Round</button> -->
-        <!-- <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button> -->
+        <button v-if="this.selectedAnswer === this.solution && this.gameRound === 3" type="button" name="button" v-on:click="handleGameOver">Finish</button>
         <!-- <button v-if="this.selectedAnswer && this.selectedAnswer != this.solution && this.playerLives === 0 " type="button" name="button">Game Over</button> -->
       </div>
     </div>
@@ -218,31 +214,17 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding: 0 4px;
-    justify-content: center;
-    align-items: center;
   }
 
   /* Create two equal columns that sits next to each other */
   .column {
     flex: 50%;
     padding: 0 4px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
   }
 
   .column img {
     margin-top: 8px;
     vertical-align: middle;
-  }
-
-  .question-column {
-    flex: 50%;
-    padding: 0 4px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 0 0 30px 0;
   }
 
 </style>
